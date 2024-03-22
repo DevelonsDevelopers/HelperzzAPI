@@ -1,0 +1,11 @@
+const router = require('express').Router()
+const controller = require('../controllers/contractors')
+
+router.post('/create', controller.createContractor)
+router.get('/all', controller.getAllContractors);
+router.get('/featured', controller.getFeaturedContractors);
+router.delete('/delete/:id', controller.deleteContractor);
+router.put('/status', controller.updateContractorStatus)
+router.put('/featured', controller.updateContractorFeatured)
+
+module.exports = router;
