@@ -17,7 +17,7 @@ module.exports = class Contractor {
     }
 
     static fetchAllActive () {
-        return database.query('SELECT * FROM contractors WHERE status = 1')
+        return database.query('SELECT * FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category WHERE contractors.status = 1')
     }
 
     static featured () {

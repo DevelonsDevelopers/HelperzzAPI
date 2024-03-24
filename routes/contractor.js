@@ -3,6 +3,7 @@ const controller = require('../controllers/contractors')
 
 router.post('/create', controller.createContractor)
 router.get('/all', controller.getAllContractors);
+router.get('/active', controller.getAllActiveContractors);
 router.get('/featured', controller.getFeaturedContractors);
 router.delete('/delete/:id', controller.deleteContractor);
 router.put('/status', controller.updateContractorStatus)
