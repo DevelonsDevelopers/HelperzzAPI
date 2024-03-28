@@ -1,11 +1,38 @@
 const Contractor = require('../models/contractor')
-const Category = require("../models/category");
+const ContractorDetails = require('../models/contractorDetails')
 
 exports.createContractor = async (req, res, next) => {
     try {
         const [result] = await Contractor.create(req.body)
         const [[contractor]] = await Contractor.fetch(result.insertId)
         res.status(201).json({ responseCode: 201, message: "Contractor Added Successfully", contractor: contractor })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getContractor = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [[contractor]] = await Contractor.fetch(id)
+        res.status(201).json({ responseCode: 201, message: "Contractor fetched Successfully", contractor: contractor })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getContractorDetails = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [[contractor]] = await Contractor.fetch(id)
+        const [[details]] = await ContractorDetails.fetch(id)
+        res.status(201).json({ responseCode: 201, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details } })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -71,7 +98,7 @@ exports.deleteContractor = async (req, res, next) => {
 
 exports.updateContractorStatus = async (req, res, next) => {
     try {
-        const [result] = await Category.changeStatus(req.body)
+        const [result] = await Contractor.changeStatus(req.body)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1){

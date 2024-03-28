@@ -15,6 +15,8 @@ const contractor = require('./routes/contractor')
 const testimonial = require('./routes/testimonial')
 const blog = require('./routes/blog')
 const user = require('./routes/user')
+const subcategories = require('./routes/subcategory')
+const serviceRequests = require('./routes/serviceRequest')
 
 const app = express()
 const port = process.env.PORT || 5050
@@ -53,6 +55,8 @@ database.getConnection().then(connection => {
     app.use('/api/testimonials', testimonial)
     app.use('/api/blogs', blog)
     app.use('/api/users', user)
+    app.use('/api/subcategories', subcategories)
+    app.use('/api/serviceRequests', serviceRequests)
 
     app.use(errorController.get404)
     app.use(errorController.get500)
