@@ -24,6 +24,10 @@ module.exports = class Contractor {
         return database.query('SELECT contractors.*, contractor_details.*, categories.name as category_name FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category WHERE contractors.status = 1 AND contractors.featured = 1')
     }
 
+    static update (params) {
+        return database.query('UPDATE contractors SET name = ?, email = ?, phone = ?, password = ?, address = ?, image = ? WHERE (id = ?)', [params.name, params.email, params.phone, params.password, params.address, params.image, params.id])
+    }
+
     static delete(id){
         return database.query('DELETE FROM contractors WHERE id = ?', [id])
     }

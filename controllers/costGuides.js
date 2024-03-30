@@ -1,6 +1,4 @@
 const CostGuide = require('../models/costGuide')
-const Contractor = require("../models/contractor");
-const Category = require("../models/category");
 
 exports.createCostGuide = async (req, res, next) => {
     try {
@@ -64,6 +62,24 @@ exports.getFeaturedCostGuides = async (req, res, next) => {
     }
 }
 
+exports.updateCostGuide = async (req, res, next) => {
+    try {
+        const [result] = await CostGuide.update(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Cost Guide Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.deleteCostGuide = async (req, res, next) => {
     try {
         const { id } = req.params
@@ -103,7 +119,7 @@ exports.updateCostGuideStatus = async (req, res, next) => {
 
 exports.updateCostGuideFeatured = async (req, res, next) => {
     try {
-        const [result] = await Contractor.changeFeatured(req.body)
+        const [result] = await CostGuide.changeFeatured(req.body)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1){

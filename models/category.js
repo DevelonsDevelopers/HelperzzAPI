@@ -27,7 +27,7 @@ module.exports = class Category {
     }
 
     static update(params) {
-        return database.query('')
+        return database.query('UPDATE categories SET name = ?, details = ?, image = ? WHERE (id = ?)', [params.name, params.details, params.image, params.id])
     }
 
     static changeStatus(params) {
@@ -38,4 +38,7 @@ module.exports = class Category {
         return database.query('UPDATE categories SET featured = ? WHERE (id = ?)', [params.featured, params.id])
     }
 
+    static changePopular(params) {
+        return database.query('UPDATE categories SET popular = ? WHERE (id = ?)', [params.popular, params.id])
+    }
 }

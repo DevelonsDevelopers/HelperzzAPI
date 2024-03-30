@@ -13,6 +13,19 @@ exports.createBlog = async (req, res, next) => {
     }
 }
 
+exports.getBlog = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [[blog]] = await Blog.fetch(id)
+        res.status(201).json({ responseCode: 201, message: "Blog Fetched Successfully", blog: blog })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllBlogs = async (req, res, next) => {
     try {
         const [blogs] = await Blog.fetchAll()
@@ -41,6 +54,24 @@ exports.getFeaturedBlogs = async (req, res, next) => {
     try {
         const [blogs] = await Blog.featured()
         res.status(200).json({ responseCode: 200, message: "Categories fetched successfully", blogs: blogs })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.updateBlog = async (req, res, next) => {
+    try {
+        const [result] = await Blog.update(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Blog Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500

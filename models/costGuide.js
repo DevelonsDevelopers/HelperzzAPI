@@ -22,6 +22,10 @@ module.exports = class costGuides {
         return database.query('SELECT * FROM cost_guides WHERE status = 1 AND featured = 1')
     }
 
+    static update (params) {
+        return database.query('UPDATE cost_guides SET title = ?, subtitle = ?, content = ?, image = ? WHERE (id = ?)', [params.title, params.subtitle, params.content, params.image, params.id])
+    }
+
     static delete(id){
         return database.query('DELETE FROM cost_guides WHERE id = ?', [id])
     }

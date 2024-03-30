@@ -2,35 +2,39 @@ const database = require('../util/database')
 
 module.exports = class Blog {
 
-    static create(params){
+    static create(params) {
         return database.query('INSERT INTO blogs (title, category, subtitle, content, image) VALUES (?, ?, ?, ?, ?)', [params.title, params.category, params.subtitle, params.content, params.image])
     }
 
-    static fetch(id){
+    static fetch(id) {
         return database.query('SELECT * FROM blogs WHERE id = ?', [id])
     }
 
-    static fetchAll(){
+    static fetchAll() {
         return database.query('SELECT * FROM blogs')
     }
 
-    static fetchAllActive(){
+    static fetchAllActive() {
         return database.query('SELECT * FROM blogs WHERE status = 1')
     }
 
-    static featured(){
+    static featured() {
         return database.query('SELECT * FROM blogs WHERE featured = 1 AND status = 1')
     }
 
-    static delete(id){
+    static update(params) {
+        return database.query('UPDATE blogs SET title = ?, category = ?, subtitle = ?, content = ?, image = ? WHERE (id = ?)', [params.title, params.category, params.subtitle, params.content, params.image, params.id])
+    }
+
+    static delete(id) {
         return database.query('DELETE FROM blogs WHERE id = ?', [id])
     }
 
-    static changeStatus(params){
+    static changeStatus(params) {
         return database.query('UPDATE blogs SET status = ? WHERE (id = ?)', [params.status, params.id])
     }
 
-    static changeFeatured(params){
+    static changeFeatured(params) {
         return database.query('UPDATE blogs SET featured = ? WHERE (id = ?)', [params.featured, params.id])
     }
 }

@@ -62,6 +62,24 @@ exports.getFeaturedCategories = async (req, res, next) => {
     }
 }
 
+exports.updateCategory = async (req, res, next) => {
+    try {
+        const [result] = await Category.update(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Category Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.deleteCategory = async (req, res, next) => {
     try {
         const { id } = req.params
@@ -107,6 +125,24 @@ exports.updateCategoryFeatured = async (req, res, next) => {
         if (result.changedRows === 1){
             success = true
             message = "Category Featured Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.updateCategoryPopular = async (req, res, next) => {
+    try {
+        const [result] = await Category.changePopular(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Category Popular Updated Successfully"
         }
         res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {
