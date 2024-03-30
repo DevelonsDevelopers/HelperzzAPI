@@ -7,7 +7,7 @@ module.exports = class ServiceRequest {
     }
 
     static fetch (id) {
-        return database.query('SELECT * FROM service_requests WHERE id = ?')
+        return database.query('SELECT * FROM service_requests WHERE id = ?', [id])
     }
 
     static fetchAll () {

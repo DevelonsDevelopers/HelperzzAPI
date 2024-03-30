@@ -11,3 +11,4 @@ router.delete('/delete/:id', controller.deleteSubcategory)
 router.put('/status', controller.updateSubcategoryStatus)
 
 module.exports = router
+
