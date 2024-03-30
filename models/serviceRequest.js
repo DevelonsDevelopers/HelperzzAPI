@@ -7,7 +7,7 @@ module.exports = class ServiceRequest {
     }
 
     static fetch (id) {
-        return database.query('SELECT * FROM service_requests WHERE id = ?', [id])
+        return database.query('SELECT service_requests.*, customers.name, customers.email, customers.phone, customers.address, subcategories.name as subcategory_name FROM service_requests INNER JOIN customers ON customers.id = service_requests.user INNER JOIN subcategories ON subcategories.id = service_requests.subcategory WHERE service_requests.id = ?', [id])
     }
 
     static fetchAll () {

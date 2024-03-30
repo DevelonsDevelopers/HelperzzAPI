@@ -65,6 +65,19 @@ exports.getAllActiveContractors = async (req, res, next) => {
     }
 }
 
+exports.getAllAssignedContractors = async (req, res, next) => {
+    try {
+        const { request } = req.params
+        const [contractors] = await Contractor.fetchAllAssigned(request)
+        res.status(200).json({ responseCode: 200, message: "Contractors fetched successfully", contractors: contractors })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getFeaturedContractors = async (req, res, next) => {
     try {
         const [contractors] = await Contractor.featured()

@@ -13,6 +13,19 @@ exports.createServiceRequest = async (req, res, next) => {
     }
 }
 
+exports.getServiceRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [[serviceRequest]] = await ServiceRequest.fetch(id)
+        res.status(201).json({ responseCode: 201, message: "Service Request Fetched Successfully", serviceRequest: serviceRequest })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllServiceRequests = async (req, res, next) => {
     try {
         const [serviceRequests] = await ServiceRequest.fetchAll()

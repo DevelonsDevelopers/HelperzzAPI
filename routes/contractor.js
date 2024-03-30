@@ -9,6 +9,7 @@ router.get('/details/:id', controller.getContractorDetails)
 router.get('/all', controller.getAllContractors);
 router.get('/single/:id', controller.getContractor);
 router.get('/allActive', controller.getAllActiveContractors);
+router.get('/allAssigned/:request', controller.getAllAssignedContractors);
 router.get('/featured', controller.getFeaturedContractors);
 router.put('/update', controller.updateContractor)
 router.delete('/delete/:id', controller.deleteContractor);
