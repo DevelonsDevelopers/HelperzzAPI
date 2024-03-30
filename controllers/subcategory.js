@@ -38,6 +38,19 @@ exports.getAllSubcategories = async (req, res, next) => {
     }
 }
 
+exports.getSubcategoriesByCategory = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [subcategories] = await Subcategory.fetchByCategory(id)
+        res.status(200).json({ responseCode: 200, message: "Subcategories fetched successfully", subcategories: subcategories })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllActiveSubcategories = async (req, res, next) => {
     try {
         const [subcategories] = await Subcategory.fetchAllActive()
