@@ -17,6 +17,7 @@ const blog = require('./routes/blog')
 const user = require('./routes/user')
 const subcategories = require('./routes/subcategory')
 const serviceRequests = require('./routes/serviceRequest')
+const serviceRequestContractor = require('./routes/requestContractor')
 const customer = require('./routes/customer')
 
 const app = express()
@@ -59,6 +60,7 @@ database.getConnection().then(connection => {
     app.use('/api/users', user)
     app.use('/api/subcategories', subcategories)
     app.use('/api/serviceRequests', serviceRequests)
+    app.use('/api/requestContractor', serviceRequestContractor)
 
     app.use(errorController.get404)
     app.use(errorController.get500)
