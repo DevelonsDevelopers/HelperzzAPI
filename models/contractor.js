@@ -21,7 +21,7 @@ module.exports = class Contractor {
     }
 
     static fetchAllAssigned (request) {
-        return database.query('SELECT contractors.*, contractor_details.*, categories.name as category_name FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category WHERE contractors.status = 1')
+        return database.query('SELECT contractors.*, contractor_details.*, categories.name as category_name, IFNULL(request_contractors.id, 0) as assigned FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category LEFT JOIN request_contractors ON request_contractors.contractor = contractors.id AND request_contractors.request = ? WHERE contractors.status = 1', [request])
     }
 
     static featured () {
