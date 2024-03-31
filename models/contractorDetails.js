@@ -11,7 +11,7 @@ module.exports = class ContractorDetails {
     }
 
     static async fetch (id)  {
-        return database.query('SELECT * FROM contractor_details WHERE contractor = ?', [id])
+        return database.query('SELECT contractor_details.*, categories.name as category_name FROM contractor_details INNER JOIN categories ON categories.id = contractor_details.category WHERE contractor = ?', [id])
     }
 
 }
