@@ -22,7 +22,7 @@ exports.getContractor = async (req, res, next) => {
     try {
         const { id } = req.params
         const [[contractor]] = await Contractor.fetch(id)
-        res.status(201).json({ responseCode: 201, message: "Contractor fetched Successfully", contractor: contractor })
+        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", contractor: contractor })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -40,7 +40,7 @@ exports.getContractorDetails = async (req, res, next) => {
         const [affiliations] = await ContractorAffiliations.fetchByContractor(id)
         const [badges] = await ContractorBadges.fetchByContractor(id)
         const [reviews] = await ContractorReviews.fetchByContractor(id)
-        res.status(201).json({ responseCode: 201, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews } })
+        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews } })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
