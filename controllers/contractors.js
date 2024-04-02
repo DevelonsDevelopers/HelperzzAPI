@@ -1,5 +1,8 @@
 const Contractor = require('../models/contractor')
 const ContractorDetails = require('../models/contractorDetails')
+const ContractorAwards = require('../models/contractorAwards')
+const ContractorAffiliations = require('../models/contractorAffiliations')
+const ContractorBadges = require('../models/contractorBadges')
 
 exports.createContractor = async (req, res, next) => {
     try {
@@ -32,7 +35,10 @@ exports.getContractorDetails = async (req, res, next) => {
         const { id } = req.params
         const [[contractor]] = await Contractor.fetch(id)
         const [[details]] = await ContractorDetails.fetch(id)
-        res.status(201).json({ responseCode: 201, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details } })
+        const [awards] = await ContractorAwards.fetchByContractor(id)
+        const [affiliations] = await ContractorAffiliations.fetchByContractor(id)
+        const [badges] = await ContractorBadges.fetchByContractor(id)
+        res.status(201).json({ responseCode: 201, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges } })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
