@@ -1,4 +1,4 @@
-const ContractorReviews = require("../models/ContractorReviews");
+const ContractorReviews = require("../models/contractorReviews");
 
 exports.createContractorReview = async (req, res, next) => {
     try {
