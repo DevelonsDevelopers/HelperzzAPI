@@ -15,7 +15,7 @@ module.exports = class contractorReviews {
     }
 
     static fetchByContractor(contractor) {
-        return database.query('SELECT * FROM contractors_reviews WHERE contractor = ?', [contractor])
+        return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractor = ?', [contractor])
     }
 
     static delete(id) {
