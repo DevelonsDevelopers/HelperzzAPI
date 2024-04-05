@@ -40,6 +40,10 @@ exports.getContractorDetails = async (req, res, next) => {
         const [affiliations] = await ContractorAffiliations.fetchByContractor(id)
         const [badges] = await ContractorBadges.fetchByContractor(id)
         const [reviews] = await ContractorReviews.fetchByContractor(id)
+        for (const value of reviews) {
+            const [images] = await ContractorReviews.fetchImagesByReview(value.id)
+            value.images = images;
+        }
         res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews } })
     } catch (error) {
         if (!error.statusCode){
