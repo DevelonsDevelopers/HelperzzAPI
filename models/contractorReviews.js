@@ -3,7 +3,7 @@ const database = require('../util/database')
 module.exports = class contractorReviews {
 
     static create(params) {
-        return database.query('INSERT INTO contractors_reviews (user, contractor, review, rating) VALUES (?, ?, ?, ?);', [params.user, params.contractor, params.review, params.rating])
+        return database.query('INSERT INTO contractors_reviews (user, contractor, review, rating, title, price) VALUES (?, ?, ?, ?, ?, ?);', [params.user, params.contractor, params.review, params.rating, params.title, params.price])
     }
 
     static update(params) {
