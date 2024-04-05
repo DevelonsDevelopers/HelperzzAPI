@@ -8,6 +8,7 @@ require('dotenv').config()
 const errorController = require('./controllers/error')
 
 const userAuthentication = require('./routes/userAuthentication')
+const customerAuthentication = require('./routes/customerAuthentication')
 
 const category = require('./routes/category')
 const costGuides = require('./routes/costGuide')
@@ -50,6 +51,7 @@ database.getConnection().then(connection => {
     app.use('/images', express.static(path.join(__dirname, 'public/uploads')));
 
     app.use('/api/auth/user', userAuthentication)
+    app.use('/api/auth/customer', customerAuthentication)
 
     app.use('/api/categories', category)
     app.use('/api/costGuides', costGuides)
