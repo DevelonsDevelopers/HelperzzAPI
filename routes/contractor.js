@@ -13,6 +13,7 @@ router.post('/createAffiliation', affiliationsController.createContractorAffilia
 router.post('/createAward', awardsController.createContractorAward)
 router.post('/createBadge', badgesController.createContractorBadge)
 router.post('/createReview', reviewsController.createContractorReview)
+router.post('/addReviewImage', reviewsController.addImage)
 router.delete('/deleteAffiliation', affiliationsController.deleteAffiliation)
 router.delete('/deleteAward', awardsController.deleteAward)
 router.delete('/deleteBadge', badgesController.deleteBadge)

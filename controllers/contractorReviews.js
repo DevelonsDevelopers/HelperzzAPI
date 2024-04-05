@@ -13,6 +13,18 @@ exports.createContractorReview = async (req, res, next) => {
     }
 }
 
+exports.addImage = async (req, res, next) => {
+    try {
+        const [result] = await ContractorReviews.addImage(req.body)
+        res.status(201).json({ responseCode: 201, message: "Review Image Added Successfully" })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getReview = async (req, res, next) => {
     try {
         const { id } = req.params

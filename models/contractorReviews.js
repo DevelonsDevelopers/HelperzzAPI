@@ -6,6 +6,10 @@ module.exports = class contractorReviews {
         return database.query('INSERT INTO contractors_reviews (user, contractor, review, rating, title, price) VALUES (?, ?, ?, ?, ?, ?);', [params.user, params.contractor, params.review, params.rating, params.title, params.price])
     }
 
+    static addImage(params) {
+        return database.query('INSERT INTO review_images (review, image) VALUES (?, ?)', [params.review, params.image])
+    }
+
     static update(params) {
         return database.query('')
     }
