@@ -3,7 +3,7 @@ const database = require('../util/database')
 module.exports = class Blog {
 
     static create(params) {
-        return database.query('INSERT INTO blogs (title, category, author, subtitle, content, image) VALUES (?, ?, ?, ?, ?)', [params.title, params.category, params.author, params.subtitle, params.content, params.image])
+        return database.query('INSERT INTO blogs (title, category, author, subtitle, content, image) VALUES (?, ?, ?, ?, ?, ?)', [params.title, params.category, params.author, params.subtitle, params.content, params.image])
     }
 
     static fetch(id) {
@@ -23,7 +23,7 @@ module.exports = class Blog {
     }
 
     static update(params) {
-        return database.query('UPDATE blogs SET title = ?, category = ?, author =?, subtitle = ?, content = ?, image = ? WHERE (id = ?)', [params.title, params.category, params.subtitle, params.content, params.image, params.id])
+        return database.query('UPDATE blogs SET title = ?, category = ?, author = ?, subtitle = ?, content = ?, image = ? WHERE (id = ?)', [params.title, params.category, params.author, params.subtitle, params.content, params.image, params.id])
     }
 
     static delete(id) {
