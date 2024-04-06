@@ -3,7 +3,7 @@ const database = require('../util/database')
 module.exports = class contractorReviews {
 
     static create(params) {
-        return database.query('INSERT INTO contractors_reviews (user, contractor, review, rating, title, price) VALUES (?, ?, ?, ?, ?, ?);', [params.user, params.contractor, params.review, params.rating, params.title, params.price])
+        return database.query('INSERT INTO contractors_reviews (user, contractor, category, review, rating, title, price) VALUES (?, ?, ?, ?, ?, ?, ?);', [params.user, params.contractor, params.category, params.review, params.rating, params.title, params.price])
     }
 
     static addImage(params) {
@@ -20,6 +20,10 @@ module.exports = class contractorReviews {
 
     static fetchByContractor(contractor) {
         return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractor = ?', [contractor])
+    }
+
+    static fetchByCategory(category) {
+        return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractors_reviews.category = ?', [category])
     }
 
     static fetchImagesByReview (id) {

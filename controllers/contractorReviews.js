@@ -51,6 +51,19 @@ exports.getByContractors = async (req, res, next) => {
     }
 }
 
+exports.getByCategory = async (req, res, next) => {
+    try {
+        const { category } = req.params
+        const [contractorReviews] = await ContractorReviews.fetchByCategory(category)
+        res.status(201).json({ responseCode: 201, message: "Reviews Fetched Successfully", contractorReviews: contractorReviews })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.deleteReview = async (req, res, next) => {
     try {
         const { id } = req.params

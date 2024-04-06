@@ -20,6 +20,7 @@ const subcategories = require('./routes/subcategory')
 const serviceRequests = require('./routes/serviceRequest')
 const serviceRequestContractor = require('./routes/requestContractor')
 const customer = require('./routes/customer')
+const reviews = require('./routes/contractorReviews')
 
 const app = express()
 const port = process.env.PORT || 5050
@@ -57,6 +58,7 @@ database.getConnection().then(connection => {
     app.use('/api/costGuides', costGuides)
     app.use('/api/contractors', contractor)
     app.use('/api/customers', customer)
+    app.use('/api/reviews', reviews)
     app.use('/api/testimonials', testimonial)
     app.use('/api/blogs', blog)
     app.use('/api/users', user)
