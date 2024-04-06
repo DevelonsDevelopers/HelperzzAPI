@@ -16,7 +16,7 @@ exports.createTestimonial = async (req, res, next) => {
 exports.getTestimonial = async (req, res, next) => {
     try {
         const { id } = req.params
-        const [[testimonial]] = await Testimonial.fetch(result.insertId)
+        const [[testimonial]] = await Testimonial.fetch(id)
         res.status(201).json({ responseCode: 201, message: "Testimonial Added Successfully", testimonial: testimonial })
     } catch (error) {
         if (!error.statusCode){
