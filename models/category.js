@@ -10,6 +10,10 @@ module.exports = class Category {
         return database.query('SELECT * FROM categories WHERE id = ?', [id])
     }
 
+    static fetchByTag(tag) {
+        return database.query('SELECT * FROM categories WHERE tag = ?', [tag])
+    }
+
     static fetchAll() {
         return database.query('SELECT * FROM categories')
     }

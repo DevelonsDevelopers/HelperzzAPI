@@ -26,6 +26,19 @@ exports.getCategory = async (req, res, next) => {
     }
 }
 
+exports.getCategoryByTag = async (req, res, next) => {
+    try {
+        const { tag } = req.params
+        const [[category]] = await Category.fetchByTag(tag)
+        res.status(201).json({ responseCode: 201, message: "Category Fetched Successfully", category: category })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllCategories = async (req, res, next) => {
     try {
         const [categories] = await Category.fetchAll()

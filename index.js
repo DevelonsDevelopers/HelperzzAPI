@@ -11,6 +11,7 @@ const userAuthentication = require('./routes/userAuthentication')
 const customerAuthentication = require('./routes/customerAuthentication')
 
 const category = require('./routes/category')
+const city = require('./routes/city')
 const costGuides = require('./routes/costGuide')
 const contractor = require('./routes/contractor')
 const testimonial = require('./routes/testimonial')
@@ -55,6 +56,7 @@ database.getConnection().then(connection => {
     app.use('/api/auth/customer', customerAuthentication)
 
     app.use('/api/categories', category)
+    app.use('/api/cities', city)
     app.use('/api/costGuides', costGuides)
     app.use('/api/contractors', contractor)
     app.use('/api/customers', customer)
