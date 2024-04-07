@@ -4,6 +4,7 @@ const ContractorAwards = require('../models/contractorAwards')
 const ContractorAffiliations = require('../models/contractorAffiliations')
 const ContractorBadges = require('../models/contractorBadges')
 const ContractorReviews = require('../models/contractorReviews')
+const ContractorProjects = require('../models/contractorProjects')
 
 exports.createContractor = async (req, res, next) => {
     try {
@@ -44,7 +45,12 @@ exports.getContractorDetails = async (req, res, next) => {
             const [images] = await ContractorReviews.fetchImagesByReview(value.id)
             value.images = images;
         }
-        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews } })
+        const [projects] = await ContractorProjects.fetchByContractor(id)
+        for (const project of projects) {
+            const [images] = await ContractorProjects.fetchImagesByProject(project.id)
+            project.images = images
+        }
+        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews, projects: projects } })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
