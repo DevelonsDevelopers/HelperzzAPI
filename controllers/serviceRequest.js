@@ -75,3 +75,22 @@ exports.rejectRequest = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.deleteRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ServiceRequest.delete(id)
+        let success = false
+        let message = "No Request Found"
+        if (result.affectedRows === 1){
+            success = true
+            message = "Request Deleted Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}

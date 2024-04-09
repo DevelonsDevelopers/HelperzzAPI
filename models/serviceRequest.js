@@ -21,4 +21,8 @@ module.exports = class ServiceRequest {
     static reject (id) {
         return database.query('UPDATE service_requests SET status = 2 WHERE (id = ?)', [id])
     }
+
+    static delete (id) {
+        return database.query('DELETE FROM service_requests WHERE id = ?', [id])
+    }
 }
