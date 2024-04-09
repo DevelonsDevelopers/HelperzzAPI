@@ -3,7 +3,7 @@ const database = require("../util/database")
 module.exports = class Category {
 
     static create(params) {
-        return database.query('INSERT INTO categories (name, details, image) VALUES (?, ?, ?)', [params.name, params.details, params.image])
+        return database.query('INSERT INTO categories (name, details, image, tag) VALUES (?, ?, ?, ?)', [params.name, params.details, params.image, params.tag])
     }
 
     static fetch(id) {

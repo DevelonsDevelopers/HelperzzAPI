@@ -63,16 +63,16 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
     try {
         const { tag } = req.params
         const [[contractor]] = await Contractor.fetchByTag(tag)
-        const [[details]] = await ContractorDetails.fetch(id)
-        const [awards] = await ContractorAwards.fetchByContractor(id)
-        const [affiliations] = await ContractorAffiliations.fetchByContractor(id)
-        const [badges] = await ContractorBadges.fetchByContractor(id)
-        const [reviews] = await ContractorReviews.fetchByContractor(id)
+        const [[details]] = await ContractorDetails.fetch(contractor.id)
+        const [awards] = await ContractorAwards.fetchByContractor(contractor.id)
+        const [affiliations] = await ContractorAffiliations.fetchByContractor(contractor.id)
+        const [badges] = await ContractorBadges.fetchByContractor(contractor.id)
+        const [reviews] = await ContractorReviews.fetchByContractor(contractor.id)
         for (const value of reviews) {
             const [images] = await ContractorReviews.fetchImagesByReview(value.id)
             value.images = images;
         }
-        const [projects] = await ContractorProjects.fetchByContractor(id)
+        const [projects] = await ContractorProjects.fetchByContractor(contractor.id)
         for (const project of projects) {
             const [images] = await ContractorProjects.fetchImagesByProject(project.id)
             project.images = images
