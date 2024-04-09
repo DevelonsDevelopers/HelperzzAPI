@@ -6,7 +6,7 @@ exports.createPasswordLessCustomer = async (req, res, next) => {
         const { email } = req.body;
         const [[user]] = await User.fetchByEmail(email)
         if (user){
-            return res.status(409).json({ responseCode: 409, message: "User may already exist! You can Login to use your account.", customer: user})
+            return res.status(200).json({ responseCode: 200, message: "User may already exist! You can Login to use your account.", customer: user})
         } else {
             const [result] = await Customer.passwordLessCreate(req.body)
             const [[customer]] = await Customer.fetch(result.insertId)
