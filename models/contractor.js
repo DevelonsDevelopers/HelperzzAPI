@@ -14,6 +14,7 @@ module.exports = class Contractor {
 
     static fetchByTag (tag) {
         let name = tag.replace("-", " ").toUpperCase()
+        console.log(name)
         return database.query('SELECT contractors.* FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id WHERE UPPER(contractor_details.company_name) = ?', [name])
     }
 
