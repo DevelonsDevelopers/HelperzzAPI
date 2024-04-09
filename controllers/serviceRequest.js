@@ -37,3 +37,41 @@ exports.getAllServiceRequests = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.acceptRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ServiceRequest.accept(id)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Request Accepted"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.rejectRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ServiceRequest.reject(id)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Request Rejected"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
