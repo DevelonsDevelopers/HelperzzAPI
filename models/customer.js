@@ -5,7 +5,7 @@ module.exports = class Customer {
 
     static async create (params){
         const hash = await Auth.hashPassword(params.password)
-        return database.query('INSERT INTO customers (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)', [params.name, params.email, params.phone, params.street, hash])
+        return database.query('INSERT INTO customers (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)', [params.name, params.email, params.phone, params.address, hash])
     }
 
     static passwordLessCreate (params){
