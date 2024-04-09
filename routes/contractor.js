@@ -23,6 +23,7 @@ router.delete('/deleteBadge', badgesController.deleteBadge)
 router.delete('/deleteReview', reviewsController.deleteReview)
 router.delete('/deleteProject', projectsController.deleteProject)
 router.get('/details/:id', controller.getContractorDetails)
+router.get('/detailsTag/:tag', controller.getContractorDetailsByTag)
 router.get('/all', controller.getAllContractors);
 router.get('/single/:id', controller.getContractor);
 router.get('/allActive', controller.getAllActiveContractors);

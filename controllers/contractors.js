@@ -59,6 +59,33 @@ exports.getContractorDetails = async (req, res, next) => {
     }
 }
 
+exports.getContractorDetailsByTag = async (req, res, next) => {
+    try {
+        const { tag } = req.params
+        const [[contractor]] = await Contractor.fetchByTag(tag)
+        const [[details]] = await ContractorDetails.fetch(id)
+        const [awards] = await ContractorAwards.fetchByContractor(id)
+        const [affiliations] = await ContractorAffiliations.fetchByContractor(id)
+        const [badges] = await ContractorBadges.fetchByContractor(id)
+        const [reviews] = await ContractorReviews.fetchByContractor(id)
+        for (const value of reviews) {
+            const [images] = await ContractorReviews.fetchImagesByReview(value.id)
+            value.images = images;
+        }
+        const [projects] = await ContractorProjects.fetchByContractor(id)
+        for (const project of projects) {
+            const [images] = await ContractorProjects.fetchImagesByProject(project.id)
+            project.images = images
+        }
+        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews, projects: projects } })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllContractors = async (req, res, next) => {
     try {
         const [contractors] = await Contractor.fetchAll()

@@ -12,6 +12,11 @@ module.exports = class Contractor {
         return database.query('SELECT * FROM contractors WHERE id = ?', [id])
     }
 
+    static fetchByTag (tag) {
+        let name = tag.replace("-", " ").toUpperCase()
+        return database.query('SELECT contractors.* FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id WHERE UPPER(contractor_details.company_name) = ?', [name])
+    }
+
     static fetchAll () {
         return database.query('SELECT contractors.*, contractor_details.company_name, contractor_details.address as company_address, contractor_details.postal_code FROM contractors LEFT JOIN contractor_details ON contractor_details.contractor = contractors.id')
     }
