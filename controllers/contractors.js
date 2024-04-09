@@ -62,7 +62,6 @@ exports.getContractorDetails = async (req, res, next) => {
 exports.getContractorDetailsByTag = async (req, res, next) => {
     try {
         const { tag } = req.params
-        console.log(tag)
         const [[contractor]] = await Contractor.fetchByTag(tag)
         const [[details]] = await ContractorDetails.fetch(contractor.id)
         const [awards] = await ContractorAwards.fetchByContractor(contractor.id)
