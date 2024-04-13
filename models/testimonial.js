@@ -23,7 +23,7 @@ module.exports = class Testimonial {
     }
 
     static update (params) {
-        return database.query('UPDATE testimonials SET name = ?, email = ?, location = ?, review = ?, rating = ? WHERE (id = ?)', [params.name, params.email, params.location, params.review, params.rating])
+        return database.query('UPDATE testimonials SET name = ?, email = ?, location = ?, review = ?, rating = ? WHERE (id = ?)', [params.name, params.email, params.location, params.review, params.rating, params.id])
     }
 
     static delete (id) {
