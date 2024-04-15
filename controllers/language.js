@@ -4,7 +4,7 @@ exports.createLanguage = async (req, res, next) => {
     try {
         const [result] = await Language.create(req.body)
         const [[language]] = await Language.fetch(result.insertId)
-        res.status(201).json({ responseCode: 201, message: "Language Added Successfully", highlight: highlight })
+        res.status(201).json({ responseCode: 201, message: "Language Added Successfully", language: language })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
