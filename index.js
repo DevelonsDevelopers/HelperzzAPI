@@ -7,6 +7,8 @@ require('dotenv').config()
 
 const errorController = require('./controllers/error')
 
+const emailService = require('./routes/emailService')
+
 const userAuthentication = require('./routes/userAuthentication')
 const customerAuthentication = require('./routes/customerAuthentication')
 
@@ -32,10 +34,10 @@ app.use(express.json())
 app.use(cors())
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb){
+    destination: function (req, file, cb) {
         return cb(null, './public/uploads')
     },
-    filename: function (req, file, cb){
+    filename: function (req, file, cb) {
         return cb(null, `${Date.now()}_${file.originalname}`)
     }
 })
@@ -45,11 +47,11 @@ const upload = multer({storage})
 database.getConnection().then(connection => {
 
     app.get('/', (req, res) => {
-        res.status(401).json({ message: "Unauthorized Access" })
+        res.status(401).json({message: "Unauthorized Access"})
     })
 
     app.post('/api/upload/image', upload.single('file'), (req, res) => {
-        res.status(200).json({ responseCode: 200, message: "File uploaded", fileName: req.file.filename })
+        res.status(200).json({responseCode: 200, message: "File uploaded", fileName: req.file.filename})
     })
 
     app.use('/images', express.static(path.join(__dirname, 'public/uploads')));
@@ -71,6 +73,7 @@ database.getConnection().then(connection => {
     app.use('/api/subcategories', subcategories)
     app.use('/api/serviceRequests', serviceRequests)
     app.use('/api/requestContractor', serviceRequestContractor)
+    app.use('/api/mailer', emailService)
 
     app.use(errorController.get404)
     app.use(errorController.get500)
