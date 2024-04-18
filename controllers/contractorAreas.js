@@ -1,10 +1,10 @@
-const ContractorAffiliations = require("../models/contractorAffiliations");
+const ContractorAreas = require("../models/contractorAreas");
 
-exports.createContractorAffiliation = async (req, res, next) => {
+exports.createContractorArea = async (req, res, next) => {
     try {
-        const [result] = await ContractorAffiliations.create(req.body)
-        const [[contractorAffiliation]] = await ContractorAffiliations.fetch(result.insertId)
-        res.status(201).json({ responseCode: 201, message: "Affiliations Added Successfully", affiliation: contractorAffiliation })
+        const [result] = await ContractorAreas.create(req.body)
+        const [[contractorArea]] = await ContractorAreas.fetch(result.insertId)
+        res.status(201).json({ responseCode: 201, message: "Area Added Successfully", area: contractorArea })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -13,11 +13,11 @@ exports.createContractorAffiliation = async (req, res, next) => {
     }
 }
 
-exports.getAffiliation = async (req, res, next) => {
+exports.getArea = async (req, res, next) => {
     try {
         const { id } = req.params
-        const [[contractorAffiliation]] = await ContractorAffiliations.fetch(id)
-        res.status(201).json({ responseCode: 201, message: "Affiliation Fetched Successfully", contractorAffiliation: contractorAffiliation })
+        const [[contractorArea]] = await ContractorAreas.fetch(id)
+        res.status(201).json({ responseCode: 201, message: "Area Fetched Successfully", contractorArea: contractorArea })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -29,8 +29,8 @@ exports.getAffiliation = async (req, res, next) => {
 exports.getByContractors = async (req, res, next) => {
     try {
         const { contractor } = req.params
-        const [contractorAffiliations] = await ContractorAffiliations.fetchByContractor(contractor)
-        res.status(201).json({ responseCode: 201, message: "Affiliations Fetched Successfully", contractorAffiliations: contractorAffiliations })
+        const [contractorAreas] = await ContractorAreas.fetchByContractor(contractor)
+        res.status(201).json({ responseCode: 201, message: "Areas Fetched Successfully", contractorAreas: contractorAreas })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -39,15 +39,15 @@ exports.getByContractors = async (req, res, next) => {
     }
 }
 
-exports.deleteAffiliation = async (req, res, next) => {
+exports.deleteArea = async (req, res, next) => {
     try {
         const { id } = req.params
-        const [result] = await ContractorAffiliations.delete(id)
+        const [result] = await ContractorAreas.delete(id)
         let success = false
-        let message = "No Affiliation Found"
+        let message = "No Area Found"
         if (result.affectedRows === 1){
             success = true
-            message = "Affiliation Deleted Successfully"
+            message = "Area Deleted Successfully"
         }
         res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {
