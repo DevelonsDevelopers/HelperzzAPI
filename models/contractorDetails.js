@@ -15,10 +15,10 @@ module.exports = class ContractorDetails {
     }
 
     static popularContractors () {
-        return database.query('SELECT contractor_details.*, (SELECT COUNT(*) FROM request_contractors WHERE request_contractors.contractor = contractor_details.contractor) as leads, categories.name as category_name, contractors.image FROM contractor_details INNER JOIN categories ON categories.id = contractor_details.category INNER JOIN contractors ON contractors.id = contractor_details.contractor ORDER BY leads DESC LIMIT 10')
+        return database.query('SELECT contractor_details.*, (SELECT COUNT(*) FROM request_contractors WHERE request_contractors.contractor = contractor_details.contractor) as leads, categories.name as category_name, contractors.image FROM contractor_details INNER JOIN categories ON categories.id = contractor_details.category INNER JOIN contractors ON contractors.id = contractor_details.contractor ORDER BY leads DESC LIMIT 6')
     }
 
     static recentContractors () {
-        return database.query('SELECT contractor_details.*, categories.name as category_name, contractors.image FROM contractor_details INNER JOIN categories ON categories.id = contractor_details.category INNER JOIN contractors ON contractors.id = contractor_details.contractor ORDER BY contractor DESC LIMIT 10')
+        return database.query('SELECT contractor_details.*, categories.name as category_name, contractors.image FROM contractor_details INNER JOIN categories ON categories.id = contractor_details.category INNER JOIN contractors ON contractors.id = contractor_details.contractor ORDER BY contractor DESC LIMIT 6')
     }
 }
