@@ -30,3 +30,27 @@ exports.updateContractorDetails = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.getPopularContractors = async (req, res, next) => {
+    try {
+        const [contractors] = await ContractorDetails.popularContractors()
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getRecentContractors = async (req, res, next) => {
+    try {
+        const [contractors] = await ContractorDetails.recentContractors()
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}

@@ -14,6 +14,9 @@ module.exports = class ServiceRequest {
         return database.query('SELECT service_requests.*, customers.name, subcategories.name as subcategory_name FROM service_requests INNER JOIN customers ON customers.id = service_requests.user INNER JOIN subcategories ON subcategories.id = service_requests.subcategory ORDER BY service_requests.id DESC')
     }
 
+    static fetchRecent () {
+        return database.query('SELECT service_requests.*, customers.name as customer_name FROM service_requests INNER JOIN customers ON customers.id = service_requests.user ORDER BY service_requests.id DESC LIMIT 10')
+    }
     static accept (id) {
         return database.query('UPDATE service_requests SET status = 1 WHERE (id = ?)', [id])
     }
