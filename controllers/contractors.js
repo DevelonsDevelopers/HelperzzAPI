@@ -5,14 +5,18 @@ const ContractorAffiliations = require('../models/contractorAffiliations')
 const ContractorBadges = require('../models/contractorBadges')
 const ContractorReviews = require('../models/contractorReviews')
 const ContractorProjects = require('../models/contractorProjects')
+const ContractorAreas = require('../models/contractorAreas')
+const ContractorHighlights = require('../models/contractorHighlights')
+const ContractorLanguages = require('../models/contractorLanguages')
+const ContractorRequests = require('../models/requestContractor')
 
 exports.createContractor = async (req, res, next) => {
     try {
         const [result] = await Contractor.create(req.body)
         const [[contractor]] = await Contractor.fetch(result.insertId)
-        res.status(201).json({ responseCode: 201, message: "Contractor Added Successfully", contractor: contractor })
+        res.status(201).json({responseCode: 201, message: "Contractor Added Successfully", contractor: contractor})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -21,11 +25,11 @@ exports.createContractor = async (req, res, next) => {
 
 exports.getContractor = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const {id} = req.params
         const [[contractor]] = await Contractor.fetch(id)
-        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", contractor: contractor })
+        res.status(200).json({responseCode: 200, message: "Contractor fetched Successfully", contractor: contractor})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -34,7 +38,7 @@ exports.getContractor = async (req, res, next) => {
 
 exports.getContractorDetails = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const {id} = req.params
         const [[contractor]] = await Contractor.fetch(id)
         const [[details]] = await ContractorDetails.fetch(id)
         const [awards] = await ContractorAwards.fetchByContractor(id)
@@ -50,9 +54,29 @@ exports.getContractorDetails = async (req, res, next) => {
             const [images] = await ContractorProjects.fetchImagesByProject(project.id)
             project.images = images
         }
-        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews, projects: projects } })
+        const [areas] = await ContractorAreas.fetchByContractor(id)
+        const [highlights] = await ContractorHighlights.fetchByContractor(id)
+        const [languages] = await ContractorLanguages.fetchByContractor(id)
+        const [leads] = await ContractorRequests.fetchByContractor(id)
+        res.status(200).json({
+            responseCode: 200,
+            message: "Contractor fetched Successfully",
+            data: {
+                contractor: contractor,
+                details: details,
+                awards: awards,
+                affiliations: affiliations,
+                badges: badges,
+                reviews: reviews,
+                projects: projects,
+                areas: areas,
+                highlights: highlights,
+                languages: languages,
+                leads: leads
+            }
+        })
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -61,7 +85,7 @@ exports.getContractorDetails = async (req, res, next) => {
 
 exports.getContractorDetailsByTag = async (req, res, next) => {
     try {
-        const { tag } = req.params
+        const {tag} = req.params
         const [[contractor]] = await Contractor.fetchByTag(tag)
         const [[details]] = await ContractorDetails.fetch(contractor.id)
         const [awards] = await ContractorAwards.fetchByContractor(contractor.id)
@@ -77,9 +101,21 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
             const [images] = await ContractorProjects.fetchImagesByProject(project.id)
             project.images = images
         }
-        res.status(200).json({ responseCode: 200, message: "Contractor fetched Successfully", data: { contractor: contractor, details: details, awards: awards, affiliations: affiliations, badges: badges, reviews: reviews, projects: projects } })
+        res.status(200).json({
+            responseCode: 200,
+            message: "Contractor fetched Successfully",
+            data: {
+                contractor: contractor,
+                details: details,
+                awards: awards,
+                affiliations: affiliations,
+                badges: badges,
+                reviews: reviews,
+                projects: projects
+            }
+        })
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -89,9 +125,9 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
 exports.getAllContractors = async (req, res, next) => {
     try {
         const [contractors] = await Contractor.fetchAll()
-        res.status(200).json({ responseCode: 200, message: "Contractors fetched successfully", contractors: contractors })
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -101,9 +137,9 @@ exports.getAllContractors = async (req, res, next) => {
 exports.getAllActiveContractors = async (req, res, next) => {
     try {
         const [contractors] = await Contractor.fetchAllActive()
-        res.status(200).json({ responseCode: 200, message: "Contractors fetched successfully", contractors: contractors })
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -112,11 +148,11 @@ exports.getAllActiveContractors = async (req, res, next) => {
 
 exports.getAllAssignedContractors = async (req, res, next) => {
     try {
-        const { request } = req.params
+        const {request} = req.params
         const [contractors] = await Contractor.fetchAllAssigned(request)
-        res.status(200).json({ responseCode: 200, message: "Contractors fetched successfully", contractors: contractors })
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -125,11 +161,11 @@ exports.getAllAssignedContractors = async (req, res, next) => {
 
 exports.getContractorsByCategory = async (req, res, next) => {
     try {
-        const { category } = req.params
+        const {category} = req.params
         const [contractors] = await Contractor.fetchByCategory(category)
-        res.status(200).json({ responseCode: 200, message: "Contractors fetched successfully", contractors: contractors })
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -139,9 +175,9 @@ exports.getContractorsByCategory = async (req, res, next) => {
 exports.getFeaturedContractors = async (req, res, next) => {
     try {
         const [contractors] = await Contractor.featured()
-        res.status(200).json({ responseCode: 200, message: "Contractors fetched successfully", contractors: contractors })
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -150,17 +186,17 @@ exports.getFeaturedContractors = async (req, res, next) => {
 
 exports.deleteContractor = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const {id} = req.params
         const [result] = await Contractor.delete(id)
         let success = false
         let message = "No Contractor Found"
-        if (result.affectedRows === 1){
+        if (result.affectedRows === 1) {
             success = true
             message = "Contractor Deleted Successfully"
         }
-        res.status(202).json({ responseCode: 202, message: message, success: success })
+        res.status(202).json({responseCode: 202, message: message, success: success})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -172,13 +208,13 @@ exports.updateContractor = async (req, res, next) => {
         const [result] = await Contractor.update(req.body)
         let success = false
         let message = "Failed to Update"
-        if (result.changedRows === 1){
+        if (result.changedRows === 1) {
             success = true
             message = "Contractor Updated Successfully"
         }
-        res.status(202).json({ responseCode: 202, message: message, success: success })
+        res.status(202).json({responseCode: 202, message: message, success: success})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -190,13 +226,13 @@ exports.updateContractorStatus = async (req, res, next) => {
         const [result] = await Contractor.changeStatus(req.body)
         let success = false
         let message = "Failed to Update"
-        if (result.changedRows === 1){
+        if (result.changedRows === 1) {
             success = true
             message = "Contractor Status Updated Successfully"
         }
-        res.status(202).json({ responseCode: 202, message: message, success: success })
+        res.status(202).json({responseCode: 202, message: message, success: success})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)
@@ -208,13 +244,13 @@ exports.updateContractorFeatured = async (req, res, next) => {
         const [result] = await Contractor.changeFeatured(req.body)
         let success = false
         let message = "Failed to Update"
-        if (result.changedRows === 1){
+        if (result.changedRows === 1) {
             success = true
             message = "Contractor Featured Updated Successfully"
         }
-        res.status(202).json({ responseCode: 202, message: message, success: success })
+        res.status(202).json({responseCode: 202, message: message, success: success})
     } catch (error) {
-        if (!error.statusCode){
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)

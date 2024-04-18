@@ -10,6 +10,10 @@ module.exports = class RequestContractor {
         return database.query('SELECT * FROM request_contractors WHERE id = ?', [id])
     }
 
+    static fetchByContractor(contractor){
+        return database.query('SELECT service_requests.* FROM request_contractors INNER JOIN service_requests ON service_requests.id = request_contractors.request WHERE contractor = ?', [contractor])
+    }
+
     static delete (id){
         return database.query('DELETE FROM request_contractors WHERE id = ?', [id])
     }
