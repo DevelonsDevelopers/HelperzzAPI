@@ -1,4 +1,5 @@
 const Category = require('../models/category')
+const Subcategory = require("../models/subcategory");
 
 exports.createCategory = async (req, res, next) => {
     try {
@@ -55,6 +56,22 @@ exports.getAllActiveCategories = async (req, res, next) => {
     try {
         const [categories] = await Category.fetchAllActive()
         res.status(200).json({ responseCode: 200, message: "Categories fetched successfully", categories: categories })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getCategoriesSubcategories = async (req, res, next) => {
+    try {
+        const [categories] = await Category.fetchAllActive()
+        for (const category of categories) {
+            const [subcategories] = await Subcategory.fetchByCategory(category.id)
+            category.subcategories = subcategories;
+        }
+        res.status(200).json({ responseCode: 200, message: "Categories and Subcategories fetched successfully", categories: categories })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
