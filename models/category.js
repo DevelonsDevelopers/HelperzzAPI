@@ -26,6 +26,10 @@ module.exports = class Category {
         return database.query('SELECT * FROM categories WHERE featured = 1 AND status = 1')
     }
 
+    static popular() {
+        return database.query('SELECT * FROM categories WHERE popular = 1 AND status = 1')
+    }
+
     static delete(id) {
         return database.query('DELETE FROM categories WHERE id = ?', [id])
     }

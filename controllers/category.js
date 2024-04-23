@@ -92,6 +92,18 @@ exports.getFeaturedCategories = async (req, res, next) => {
     }
 }
 
+exports.getPopularCategories = async (req, res, next) => {
+    try {
+        const [categories] = await Category.popular()
+        res.status(200).json({ responseCode: 200, message: "Categories fetched successfully", categories: categories })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.updateCategory = async (req, res, next) => {
     try {
         const [result] = await Category.update(req.body)
