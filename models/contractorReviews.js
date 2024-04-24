@@ -24,7 +24,7 @@ module.exports = class contractorReviews {
 
     static fetchRatings(contractor) {
         return database.query('SELECT \n' +
-            '((SELECT SUM(rating) FROM contractors_reviews WHERE contractor = ?)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as average,\n' +
+            '((SELECT SUM(rating) FROM contractors_reviews WHERE contractor = ?)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as avg,\n' +
             '(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ? AND created_date >= (NOW() - INTERVAL 90 DAY) LIMIT 5)/5 as recency, \n' +
             '((SELECT SUM(satisfaction) FROM contractors_reviews WHERE contractor = ?)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?))/5 as reputation,\n' +
             '((SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ? AND rating >= 4)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as great,\n' +
