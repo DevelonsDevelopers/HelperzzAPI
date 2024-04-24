@@ -22,6 +22,16 @@ module.exports = class contractorReviews {
         return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractor = ?', [contractor])
     }
 
+    static fetchRatings(contractor) {
+        return database.query('SELECT \n' +
+            '((SELECT SUM(rating) FROM contractors_reviews WHERE contractor = ?)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as average,\n' +
+            '(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ? AND created_date >= (NOW() - INTERVAL 90 DAY) LIMIT 5)/5 as recency, \n' +
+            '((SELECT SUM(satisfaction) FROM contractors_reviews WHERE contractor = ?)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?))/5 as reputation,\n' +
+            '((SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ? AND rating >= 4)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as great,\n' +
+            '((SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ? AND rating = 3)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as average,\n' +
+            '((SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ? AND rating <= 2)/(SELECT COUNT(*) FROM contractors_reviews WHERE contractor = ?)) as poor', [contractor, contractor, contractor, contractor, contractor, contractor, contractor, contractor, contractor, contractor, contractor])
+    }
+
     static fetchByCategory(category) {
         return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractors_reviews.category = ?', [category])
     }
