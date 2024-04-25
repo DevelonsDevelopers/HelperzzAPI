@@ -71,6 +71,7 @@ exports.getContractorDetails = async (req, res, next) => {
                 badges: badges,
                 reviews: reviews,
                 projects: projects,
+                documents: documents,
                 areas: areas,
                 highlights: highlights,
                 languages: languages,
