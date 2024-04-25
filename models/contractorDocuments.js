@@ -2,7 +2,7 @@ const database = require("../util/database");
 module.exports = class contractorAffiliations {
 
     static create(params) {
-        return database.query('INSERT INTO contractor_documents (contractor, title, file, date, image) VALUES (?, ?, ?, ?, ?)', [params.contractor, params.title, params.subtitle, params.date, params.image])
+        return database.query('INSERT INTO contractor_documents (contractor, title, file) VALUES (?, ?, ?)', [params.contractor, params.title, params.file])
     }
 
     static fetch(id) {
