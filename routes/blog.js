@@ -5,6 +5,7 @@ router.post('/create', controller.createBlog)
 router.get('/all', controller.getAllBlogs);
 router.get('/allActive', controller.getAllActiveBlogs);
 router.get('/single/:id', controller.getBlog);
+router.get('/tag/:tag', controller.getBlogByTag);
 router.get('/featured', controller.getFeaturedBlogs);
 router.put('/update', controller.updateBlog)
 router.delete('/delete/:id', controller.deleteBlog);

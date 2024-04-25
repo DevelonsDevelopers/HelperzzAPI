@@ -26,6 +26,19 @@ exports.getBlog = async (req, res, next) => {
     }
 }
 
+exports.getBlogByTag = async (req, res, next) => {
+    try {
+        const { tag } = req.params
+        const [[blog]] = await Blog.fetchByTag(id)
+        res.status(201).json({ responseCode: 201, message: "Blog Fetched Successfully", blog: blog })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllBlogs = async (req, res, next) => {
     try {
         const [blogs] = await Blog.fetchAll()

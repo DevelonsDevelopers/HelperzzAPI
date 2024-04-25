@@ -5,6 +5,7 @@ const ContractorAffiliations = require('../models/contractorAffiliations')
 const ContractorBadges = require('../models/contractorBadges')
 const ContractorReviews = require('../models/contractorReviews')
 const ContractorProjects = require('../models/contractorProjects')
+const ContractorDocuments = require('../models/contractorDocuments')
 const ContractorAreas = require('../models/contractorAreas')
 const ContractorHighlights = require('../models/contractorHighlights')
 const ContractorLanguages = require('../models/contractorLanguages')
@@ -54,6 +55,7 @@ exports.getContractorDetails = async (req, res, next) => {
             const [images] = await ContractorProjects.fetchImagesByProject(project.id)
             project.images = images
         }
+        const [documents] = await ContractorDocuments.fetchByContractor(id)
         const [areas] = await ContractorAreas.fetchByContractor(id)
         const [highlights] = await ContractorHighlights.fetchByContractor(id)
         const [languages] = await ContractorLanguages.fetchByContractor(id)

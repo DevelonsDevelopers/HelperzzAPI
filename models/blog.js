@@ -10,6 +10,11 @@ module.exports = class Blog {
         return database.query('SELECT * FROM blogs WHERE id = ?', [id])
     }
 
+    static fetchByTag (tag) {
+        let name = tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM blogs WHERE UPPER(title) = ?', [name])
+    }
+
     static fetchAll() {
         return database.query('SELECT * FROM blogs')
     }
