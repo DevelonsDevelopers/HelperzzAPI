@@ -5,7 +5,7 @@ module.exports = class Contractor {
 
     static async create (params){
         const hash = await Auth.hashPassword(params.password)
-        return database.query('INSERT INTO contractors (name, email, phone, password, address, image, status) VALUES (?, ?, ?, ?, ?, ?, ?)', [params.name, params.email, params.phone, hash, params.address, params.image, params.status])
+        return database.query('INSERT INTO contractors (name, email, phone, password, address, image, status, checked) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [params.name, params.email, params.phone, hash, params.address, params.image, params.checked, params.status])
     }
 
     static fetch (id) {
