@@ -18,6 +18,10 @@ module.exports = class contractorReviews {
         return database.query('SELECT * FROM contractors_reviews WHERE id = ?', [id])
     }
 
+    static fetchAll() {
+        return database.query('SELECT * FROM contractors_reviews ORDER BY id DESC')
+    }
+
     static fetchByContractor(contractor) {
         return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractor = ?', [contractor])
     }
@@ -42,5 +46,13 @@ module.exports = class contractorReviews {
 
     static delete(id) {
         return database.query('DELETE FROM contractors_reviews WHERE id = ?', [id])
+    }
+
+    static approve(id) {
+        return database.query('UPDATE contractors_reviews SET status = 1 WHERE (id = ?)', [id])
+    }
+
+    static reject(id) {
+        return database.query('UPDATE contractors_reviews SET status = 2 WHERE (id = ?)', [id])
     }
 }

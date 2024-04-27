@@ -1,4 +1,5 @@
 const ContractorReviews = require("../models/contractorReviews");
+const Category = require("../models/category");
 
 exports.createContractorReview = async (req, res, next) => {
     try {
@@ -38,11 +39,23 @@ exports.getReview = async (req, res, next) => {
     }
 }
 
+exports.getAllReviews = async (req, res, next) => {
+    try {
+        const [contractorReviews] = await ContractorReviews.fetchAll()
+        res.status(200).json({ responseCode: 200, message: "Reviews Fetched Successfully", reviews: contractorReviews })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getByContractors = async (req, res, next) => {
     try {
         const { contractor } = req.params
         const [contractorReviews] = await ContractorReviews.fetchByContractor(contractor)
-        res.status(201).json({ responseCode: 201, message: "Reviews Fetched Successfully", contractorReviews: contractorReviews })
+        res.status(200).json({ responseCode: 200, message: "Reviews Fetched Successfully", contractorReviews: contractorReviews })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -55,7 +68,7 @@ exports.getByCategory = async (req, res, next) => {
     try {
         const { category } = req.params
         const [contractorReviews] = await ContractorReviews.fetchByCategory(category)
-        res.status(201).json({ responseCode: 201, message: "Reviews Fetched Successfully", contractorReviews: contractorReviews })
+        res.status(200).json({ responseCode: 200, message: "Reviews Fetched Successfully", contractorReviews: contractorReviews })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -73,6 +86,44 @@ exports.deleteReview = async (req, res, next) => {
         if (result.affectedRows === 1){
             success = true
             message = "Review Deleted Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.approveReview = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ContractorReviews.approve(id)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Review Approved Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.rejectReview = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ContractorReviews.reject(id)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Review Rejected Successfully"
         }
         res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {
