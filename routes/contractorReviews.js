@@ -5,5 +5,6 @@ router.get('/all', controller.getAllReviews)
 router.get('/category/:category', controller.getByCategory)
 router.put('/approve/:id', controller.approveReview)
 router.put('/reject/:id', controller.rejectReview)
+router.delete('/delete/:id', controller.deleteReview)
 
 module.exports = router
