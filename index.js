@@ -99,7 +99,7 @@ database.getConnection().then(connection => {
     app.use(errorController.get404)
     app.use(errorController.get500)
 
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log("Connection Successful! Server is running!")
     })
 }).catch(error => {
