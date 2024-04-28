@@ -26,6 +26,7 @@ const customer = require('./routes/customer')
 const reviews = require('./routes/contractorReviews')
 const highlights = require('./routes/highlight')
 const languages = require('./routes/language')
+const successStories = require('./routes/successStories')
 
 const app = express()
 const port = process.env.PORT || 5050
@@ -73,6 +74,7 @@ database.getConnection().then(connection => {
     app.use('/api/subcategories', subcategories)
     app.use('/api/serviceRequests', serviceRequests)
     app.use('/api/requestContractor', serviceRequestContractor)
+    app.use('/api/successStory', successStories)
     app.use('/api/mailer', emailService)
 
     app.use(errorController.get404)
