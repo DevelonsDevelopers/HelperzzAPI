@@ -5,7 +5,7 @@ const path = require("path");
 const multer = require('multer')
 require('dotenv').config()
 const {Server} = require("socket.io");
-const { createServer } = require('http')
+const { createServer } = require('https')
 
 const app = express()
 const server = createServer(app)
@@ -22,13 +22,6 @@ const io = new Server(server,
 io.on("connection", (socket) => {
     console.log("SOCKET IO CONNECTION SUCCESSFUL!")
 })
-
-io.engine.on("connection_error", (err) => {
-    console.log(err.req);
-    console.log(err.code);
-    console.log(err.message);
-    console.log(err.context);
-});
 
 global.io = io
 
