@@ -5,10 +5,15 @@ const path = require("path");
 const multer = require('multer')
 require('dotenv').config()
 const {Server} = require("socket.io");
-const { createServer } = require('http')
+const { createServer } = require('https')
+
+const options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/api.helperzz.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/api.helperzz.com/fullchain.pem')
+};
 
 const app = express()
-const server = createServer(app)
+const server = createServer(options, app)
 const io = new Server(server,
     {
         cors: {
