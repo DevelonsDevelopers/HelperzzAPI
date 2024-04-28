@@ -4,6 +4,7 @@ exports.createServiceRequest = async (req, res, next) => {
     try {
         const [result] = await ServiceRequest.create(req.body)
         const [[serviceRequest]] = await ServiceRequest.fetch(result.insertId)
+        global.io.emit("New Request", serviceRequest)
         res.status(201).json({ responseCode: 201, message: "Service Request Created Successfully", serviceRequest: serviceRequest })
     } catch (error) {
         if (!error.statusCode){
