@@ -5,7 +5,7 @@ const path = require("path");
 const multer = require('multer')
 require('dotenv').config()
 const {Server} = require("socket.io");
-const { createServer } = require('https')
+const { createServer } = require('http')
 
 const app = express()
 const server = createServer(app)
