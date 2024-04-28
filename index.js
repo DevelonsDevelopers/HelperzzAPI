@@ -3,21 +3,32 @@ const cors = require('cors')
 const database = require('./util/database')
 const path = require("path");
 const multer = require('multer')
-const { createServer } = require('http')
 require('dotenv').config()
 const {Server} = require("socket.io");
+const { createServer } = require('http')
 
 const app = express()
 const server = createServer(app)
 const io = new Server(server,
     {
         cors: {
-            origin: ['*'],
+            origin: "*",
             methods: ["GET", "POST"],
             credentials: true,
         }
     }
 )
+
+io.on("connection", (socket) => {
+    console.log("SOCKET IO CONNECTION SUCCESSFUL!")
+})
+
+io.engine.on("connection_error", (err) => {
+    console.log(err.req);
+    console.log(err.code);
+    console.log(err.message);
+    console.log(err.context);
+});
 
 global.io = io
 
@@ -48,10 +59,6 @@ const port = process.env.PORT || 5050
 
 app.use(express.json())
 app.use(cors())
-
-io.on("connection", (server) => {
-    console.log("SOCKET IO CONNECTION SUCCESSFUL!")
-})
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
