@@ -50,7 +50,7 @@ app.use(express.json())
 app.use(cors())
 
 io.on("connection", (server) => {
-
+    console.log("SOCKET IO CONNECTION SUCCESSFUL!")
 })
 
 const storage = multer.diskStorage({
