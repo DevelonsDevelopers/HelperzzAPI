@@ -6,23 +6,19 @@ const multer = require('multer')
 require('dotenv').config()
 const {Server} = require("socket.io");
 const fs = require('fs');
-const { createServer } = require('https')
+const { createServer } = require('http')
 
-const options = {
-    key: fs.readFileSync('privkey.pem'),
-    cert: fs.readFileSync('fullchain.pem')
-};
+// const options = {
+//     key: fs.readFileSync('privkey.pem'),
+//     cert: fs.readFileSync('fullchain.pem')
+// };
 
 const app = express()
-
-app.use(express.json())
-app.use(cors({ origin: ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"], credentials: true }))
-
-const server = createServer(options, app)
+const server = createServer(app)
 const io = new Server(server,
     {
         cors: {
-            origin: ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"],
+            origin: "*",
             methods: ["GET", "POST"],
             credentials: true,
         }
@@ -60,20 +56,8 @@ const successStories = require('./routes/successStories')
 
 const port = process.env.PORT || 5050
 
-// app.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"]);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header(
-//         'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, X-Api-Key'
-//     );
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     if ('OPTIONS' === req.method) {
-//         res.sendStatus(200);
-//     }
-//     else {
-//         next();
-//     }
-// });
+app.use(express.json())
+app.use(cors())
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
