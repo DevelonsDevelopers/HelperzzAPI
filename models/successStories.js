@@ -23,7 +23,7 @@ module.exports = class SuccessStories {
     }
 
     static update(params) {
-        return database.query('UPDATE success_stories SET title = ?, subtitle = ?, description = ?, youtube_link = ? WHERE (id = ?)', [params.title, params.subtitle, params.author, params.subtitle, params.youtube_link, params.id])
+        return database.query('UPDATE success_stories SET title = ?, subtitle = ?, description = ?, youtube_link = ? WHERE (id = ?)', [params.title, params.subtitle, params.description, params.youtube_link, params.id])
     }
 
     static delete(id) {
