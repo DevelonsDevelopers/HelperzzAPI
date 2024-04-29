@@ -3,7 +3,7 @@ const database = require('../util/database')
 module.exports = class SuccessStories {
 
     static create(params) {
-        return database.query('INSERT INTO success_stories (title, subtitle, description, youtube_link, popular, status) VALUES (?, ?, ?, ?, ?, ?)', [params.title, params.subtitle, params.description, params.youtube_link, params.popular, params.status])
+        return database.query('INSERT INTO success_stories (title, subtitle, description, youtube_link) VALUES (?, ?, ?, ?)', [params.title, params.subtitle, params.description, params.youtube_link])
     }
 
     static fetch(id) {
