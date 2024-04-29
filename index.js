@@ -18,7 +18,7 @@ const server = createServer(options, app)
 const io = new Server(server,
     {
         cors: {
-            origin: "*",
+            origin: ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"],
             methods: ["GET", "POST"],
             credentials: true,
         }
@@ -57,7 +57,7 @@ const successStories = require('./routes/successStories')
 const port = process.env.PORT || 5050
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({ origin: ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"] }))
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
