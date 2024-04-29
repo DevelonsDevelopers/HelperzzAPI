@@ -14,6 +14,10 @@ const options = {
 };
 
 const app = express()
+
+app.use(express.json())
+app.use(cors({ origin: ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"], credentials: true }))
+
 const server = createServer(options, app)
 const io = new Server(server,
     {
@@ -56,23 +60,20 @@ const successStories = require('./routes/successStories')
 
 const port = process.env.PORT || 5050
 
-app.use(express.json())
-app.use(cors({ origin: ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"], credentials: true }))
-
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"]);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header(
-        'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, X-Api-Key'
-    );
-    res.header('Access-Control-Allow-Credentials', 'true');
-    if ('OPTIONS' === req.method) {
-        res.sendStatus(200);
-    }
-    else {
-        next();
-    }
-});
+// app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', ["https://admin.helperzz.com", "https://www.helperzz.com", "http://localhost:3000"]);
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     res.header(
+//         'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, X-Api-Key'
+//     );
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     if ('OPTIONS' === req.method) {
+//         res.sendStatus(200);
+//     }
+//     else {
+//         next();
+//     }
+// });
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
