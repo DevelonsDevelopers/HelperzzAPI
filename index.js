@@ -9,8 +9,8 @@ const fs = require('fs');
 const { createServer } = require('https')
 
 const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/api.helperzz.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/api.helperzz.com/fullchain.pem')
+    key: fs.readFileSync('privkey.pem'),
+    cert: fs.readFileSync('fullchain.pem')
 };
 
 const app = express()
