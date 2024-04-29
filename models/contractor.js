@@ -18,7 +18,7 @@ module.exports = class Contractor {
     }
 
     static fetchAll () {
-        return database.query('SELECT contractors.*, contractor_details.company_name, contractor_details.address as company_address, contractor_details.postal_code FROM contractors LEFT JOIN contractor_details ON contractor_details.contractor = contractors.id ORDER BY contractors.id DESC')
+        return database.query('SELECT contractors.*, contractor_details.company_name, contractor_details.address as company_address, contractor_details.postal_code, contractor_details.created_date FROM contractors LEFT JOIN contractor_details ON contractor_details.contractor = contractors.id ORDER BY contractors.id DESC')
     }
 
     static fetchAllActive () {

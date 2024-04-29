@@ -19,11 +19,11 @@ module.exports = class contractorReviews {
     }
 
     static fetchAll() {
-        return database.query('SELECT contractors_reviews.*, contractor_details.company_name, customers.name as customer_name FROM contractors_reviews INNER JOIN contractor_details ON contractor_details.contractor = contractors_reviews.contractor INNER JOIN customers ON customers.id = contractors_reviews.user ORDER BY contractors_reviews.id DESC')
+        return database.query('SELECT contractors_reviews.*, contractor_details.company_name, customers.name as customer_name, customers.email FROM contractors_reviews INNER JOIN contractor_details ON contractor_details.contractor = contractors_reviews.contractor INNER JOIN customers ON customers.id = contractors_reviews.user ORDER BY contractors_reviews.id DESC')
     }
 
     static fetchByContractor(contractor) {
-        return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractor = ?', [contractor])
+        return database.query('SELECT contractors_reviews.*, customers.name, customers.email FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractor = ?', [contractor])
     }
 
     static fetchRatings(contractor) {
