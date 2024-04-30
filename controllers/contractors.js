@@ -10,6 +10,9 @@ const ContractorAreas = require('../models/contractorAreas')
 const ContractorHighlights = require('../models/contractorHighlights')
 const ContractorLanguages = require('../models/contractorLanguages')
 const ContractorRequests = require('../models/requestContractor')
+const Highlight = require('../models/highlight')
+const Language = require('../models/language')
+const Category = require('../models/category')
 
 exports.createContractor = async (req, res, next) => {
     try {
@@ -169,6 +172,29 @@ exports.getContractorsByCategory = async (req, res, next) => {
         const {category} = req.params
         const [contractors] = await Contractor.fetchByCategory(category)
         res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getFilters = async (req, res, next) => {
+    try {
+
+        const [categories] = await Category.fetchAll()
+        const [highlights] = await Highlight.fetchAll()
+        const [languages] = await Language.fetchAll()
+        res.status(200).json({
+            responseCode: 200,
+            message: "Filters fetched Successfully",
+            data: {
+                categories: categories,
+                highlights: highlights,
+                languages: languages,
+            }
+        })
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500

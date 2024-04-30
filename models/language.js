@@ -10,7 +10,7 @@ module.exports = class Language {
         return database.query('SELECT * FROM languages WHERE id = ?', [id])
     }
 
-    static fetchAll (params){
+    static fetchAll (){
         return database.query('SELECT * FROM languages')
     }
 
