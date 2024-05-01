@@ -18,6 +18,14 @@ module.exports = class contractorRequests {
         return database.query('DELETE FROM contractor_requests WHERE id = ?', [id])
     }
 
+    static accept (id) {
+        return database.query('UPDATE contractor_requests SET status = 1 WHERE (id = ?)', [id])
+    }
+
+    static reject (id) {
+        return database.query('UPDATE contractor_requests SET status = 2 WHERE (id = ?)', [id])
+    }
+
     static changeStatus(params) {
         return database.query('UPDATE contractor_requests SET status = ? WHERE (id = ?)', [params.status, params.id])
     }

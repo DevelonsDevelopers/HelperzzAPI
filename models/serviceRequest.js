@@ -17,6 +17,7 @@ module.exports = class ServiceRequest {
     static fetchRecent () {
         return database.query('SELECT service_requests.*, customers.name as customer_name FROM service_requests INNER JOIN customers ON customers.id = service_requests.user ORDER BY service_requests.id DESC LIMIT 6')
     }
+
     static accept (id) {
         return database.query('UPDATE service_requests SET status = 1 WHERE (id = ?)', [id])
     }

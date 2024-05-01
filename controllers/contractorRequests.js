@@ -1,4 +1,5 @@
 const ContractorRequest = require('../models/contractorRequests')
+const ServiceRequest = require("../models/serviceRequest");
 
 exports.createContractorRequest = async (req, res, next) => {
     try {
@@ -47,6 +48,44 @@ exports.deleteContractorRequest = async (req, res, next) => {
         if (result.affectedRows === 1){
             success = true
             message = "Contractor Request Deleted Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.acceptContractorRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ContractorRequest.accept(id)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Request Accepted"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.rejectContractorRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [result] = await ContractorRequest.reject(id)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Request Rejected"
         }
         res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {
