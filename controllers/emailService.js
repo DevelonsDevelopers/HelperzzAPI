@@ -73,7 +73,7 @@ exports.customerForgotPassword = async (req, res, next) => {
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
-            res.status(200).json({"responseCode": 205, "message": "Email Failed!"});
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
         } else {
             res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
         }
