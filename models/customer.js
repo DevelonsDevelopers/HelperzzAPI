@@ -28,8 +28,9 @@ module.exports = class Customer {
         return database.query('SELECT * FROM customers')
     }
 
-    static updateByToken (params) {
-        return database.query('UPDATE customers SET password = ? WHERE (reset_token = ?)', [params.password, params.token])
+    static async updateByToken (params) {
+        const hash = await Auth.hashPassword(params.password)
+        return database.query('UPDATE customers SET password = ? WHERE (reset_token = ?)', [hash, params.token])
     }
 
     static setToken(params){
