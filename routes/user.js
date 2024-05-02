@@ -5,7 +5,6 @@ router.post('/create', controller.createUser)
 router.get('/single/:id', controller.getUser)
 router.get('/all', controller.getAllUsers);
 router.put('/update', controller.updateUser)
-router.put('/updatePassword', controller.updatePassword)
 router.delete('/delete/:id', controller.deleteUser);
 router.put('/status', controller.updateUserStatus)
 
