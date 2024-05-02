@@ -3,7 +3,7 @@ const Customer = require('../models/customer')
 exports.createPasswordLessCustomer = async (req, res, next) => {
     try {
         const { email } = req.body;
-        const [[user]] = await User.fetchByEmail(email)
+        const [[user]] = await Customer.fetchByEmail(email)
         if (user){
             return res.status(200).json({ responseCode: 200, message: "User may already exist! You can Login to use your account.", customer: user})
         } else {
