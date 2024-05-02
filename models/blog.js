@@ -27,6 +27,18 @@ module.exports = class Blog {
         return database.query('SELECT * FROM blogs WHERE featured = 1 AND status = 1')
     }
 
+    static designs() {
+        return database.query('SELECT * FROM blogs WHERE category = "Design" AND status = 1')
+    }
+
+    static improvements() {
+        return database.query('SELECT * FROM blogs WHERE category = "Improvement" AND status = 1')
+    }
+
+    static updates() {
+        return database.query('SELECT * FROM blogs WHERE category = "Update" AND status = 1')
+    }
+
     static update(params) {
         return database.query('UPDATE blogs SET title = ?, category = ?, author = ?, subtitle = ?, content = ?, image = ? WHERE (id = ?)', [params.title, params.category, params.author, params.subtitle, params.content, params.image, params.id])
     }

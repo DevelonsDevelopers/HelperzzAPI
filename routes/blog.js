@@ -3,6 +3,7 @@ const controller = require('../controllers/blog')
 
 router.post('/create', controller.createBlog)
 router.get('/all', controller.getAllBlogs);
+router.get('/page', controller.getBlogs);
 router.get('/allActive', controller.getAllActiveBlogs);
 router.get('/single/:id', controller.getBlog);
 router.get('/tag/:tag', controller.getBlogByTag);
