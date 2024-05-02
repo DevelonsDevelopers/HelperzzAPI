@@ -1,6 +1,6 @@
 const {template} = require("../util/template");
 const nodemailer = require('nodemailer');
-const User = require("../models/user");
+const Customer = require("../models/customer");
 
 function randomize(length) {
     let result = '';
@@ -50,7 +50,7 @@ exports.contractorEmail = async (req, res, next) => {
 exports.customerForgotPassword = async (req, res, next) => {
     let email = req.body.email;
     let token = randomize(20) + new Date().valueOf() + randomize(10)
-    await User.setToken({ email: email, reset_token: token })
+    await Customer.setToken({ email: email, reset_token: token })
     let transporter = nodemailer.createTransport({
         host: 'smtp-relay.brevo.com',
         port: 587,

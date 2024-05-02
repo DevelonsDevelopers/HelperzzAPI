@@ -27,4 +27,12 @@ module.exports = class Customer {
     static fetchAll() {
         return database.query('SELECT * FROM customers')
     }
+
+    static updateByToken (params) {
+        return database.query('UPDATE customers SET password = ? WHERE (reset_token = ?)', [params.password, params.token])
+    }
+
+    static setToken(params){
+        return database.query('UPDATE customers SET reset_token = ? WHERE (email = ?)', [params.reset_token, params.email])
+    }
 }

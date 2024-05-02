@@ -1,5 +1,4 @@
 const Customer = require('../models/customer')
-const User = require("../models/customer");
 
 exports.createPasswordLessCustomer = async (req, res, next) => {
     try {
@@ -37,6 +36,24 @@ exports.getAllCustomers = async (req, res, next) => {
     try {
         const [customers] = await Customer.fetchAll()
         res.status(200).json({ responseCode: 200, message: "Customers fetched successfully", customers: customers })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.updatePassword = async (req, res, next) => {
+    try {
+        const [result] = await Customer.updateByToken(req.body)
+        let success = false
+        let message = "Failed to Update Password"
+        if (result.changedRows === 1){
+            success = true
+            message = "Password Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
