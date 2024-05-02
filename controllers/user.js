@@ -17,7 +17,7 @@ exports.getUser = async (req, res, next) => {
     try {
         const { id } = req.params
         const [[user]] = await User.fetch(id)
-        res.status(201).json({ responseCode: 201, message: "User Fetched Successfully", user: user })
+        res.status(200).json({ responseCode: 200, message: "User Fetched Successfully", user: user })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
@@ -46,6 +46,24 @@ exports.updateUser = async (req, res, next) => {
         if (result.changedRows === 1){
             success = true
             message = "User Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.updatePassword = async (req, res, next) => {
+    try {
+        const [result] = await User.updateByToken(req.body)
+        let success = false
+        let message = "Failed to Update Password"
+        if (result.changedRows === 1){
+            success = true
+            message = "Password Updated Successfully"
         }
         res.status(202).json({ responseCode: 202, message: message, success: success })
     } catch (error) {

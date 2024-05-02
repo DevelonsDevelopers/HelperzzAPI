@@ -18,7 +18,7 @@ exports.getContractorRequest = async (req, res, next) => {
     try {
         const { id } = req.params
         const [[contractorRequest]] = await ContractorRequest.fetch(id)
-        res.status(201).json({ responseCode: 201, message: "Contractor Request fetched Successfully", contractorRequest: contractorRequest })
+        res.status(200).json({ responseCode: 200, message: "Contractor Request fetched Successfully", contractorRequest: contractorRequest })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500

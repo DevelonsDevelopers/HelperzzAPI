@@ -24,6 +24,10 @@ module.exports = class User {
         return database.query('UPDATE users SET name = ?, username = ?, email = ?, password = ? WHERE (id = ?)', [params.name, params.username, params.email, params.password, params.id])
     }
 
+    static updateByToken (params) {
+        return database.query('UPDATE users SET password = ? WHERE (reset_token = ?)', [params.password, params.token])
+    }
+
     static delete (id) {
         return database.query('DELETE FROM users WHERE id = ?', [id])
     }
@@ -32,4 +36,7 @@ module.exports = class User {
         return database.query('UPDATE users SET status = ? WHERE (id = ?)', [params.status, params.id])
     }
 
+    static setToken(params){
+        return database.query('UPDATE users SET reset_token = ? WHERE (email = ?)', [params.reset_token, params.email])
+    }
 }
