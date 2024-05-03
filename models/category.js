@@ -30,6 +30,14 @@ module.exports = class Category {
         return database.query('SELECT * FROM categories WHERE popular = 1 AND status = 1')
     }
 
+    static banner() {
+        return database.query('SELECT * FROM categories WHERE banner = 1 AND status = 1')
+    }
+
+    static categoryContractors() {
+        return database.query('SELECT categories.id, categories.name as name, categories.tag as tag, "Category" as type FROM categories WHERE status = 1 UNION SELECT contractor_details.contractor as id, contractor_details.company_name as name, null as tag, "Contractor" as type FROM contractor_details INNER JOIN contractors ON contractors.id = contractor_details.contractor WHERE contractors.status = 1')
+    }
+
     static delete(id) {
         return database.query('DELETE FROM categories WHERE id = ?', [id])
     }

@@ -104,6 +104,30 @@ exports.getPopularCategories = async (req, res, next) => {
     }
 }
 
+exports.getBannerCategories = async (req, res, next) => {
+    try {
+        const [categories] = await Category.banner()
+        res.status(200).json({ responseCode: 200, message: "Categories fetched successfully", categories: categories })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getCategoriesContractors = async (req, res, next) => {
+    try {
+        const [categoriesContractors] = await Category.categoryContractors()
+        res.status(200).json({ responseCode: 200, message: "Categories and Contractors fetched successfully", categoriesContractors: categoriesContractors })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.updateCategory = async (req, res, next) => {
     try {
         const [result] = await Category.update(req.body)
