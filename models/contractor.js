@@ -29,7 +29,7 @@ module.exports = class Contractor {
         return database.query('SELECT contractors.*, contractor_details.*, categories.name as category_name, IFNULL(request_contractors.id, 0) as assigned FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category LEFT JOIN request_contractors ON request_contractors.contractor = contractors.id AND request_contractors.request = ? WHERE contractors.status = 1', [request])
     }
 
-    static fetchByCategory (params) {
+    static fetchByCategory (category, params) {
         let filter1 = ""
         let filter2 = ""
         let filter3 = ""
@@ -43,7 +43,7 @@ module.exports = class Contractor {
             filter3 = `WHERE ratings/users IN (${params.ratings})`
         }
         let query = `SELECT t.*, (SELECT MAX(image) FROM project_images WHERE project_images.id = t.project_id) as cover FROM (SELECT distinct(contractors.id) as id, (SELECT COUNT(*) FROM contractors_projects WHERE contractors_projects.contractor = contractors.id) as projects, IFNULL((SELECT MAX(id) FROM contractors_projects WHERE contractors_projects.contractor = contractors.id), 0) as project_id, contractors.name, contractors.email, contractors.phone, contractors.image, contractor_details.company_name, contractor_details.address, contractor_details.postal_code, contractor_details.category, contractor_details.skills, contractor_details.service_areas, contractor_details.availability_days, contractor_details.availability_hours, contractor_details.website, contractor_details.description, contractor_details.trust_seal, categories.name as category_name, IFNULL(SUM(contractors_reviews.rating) OVER(partition by contractors.id), 0) as ratings, COUNT(contractors_reviews.rating) OVER(partition by contractors.id) as users FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category LEFT JOIN contractors_reviews ON contractors_reviews.contractor = contractors.id AND contractors_reviews.status = 1 ${filter1} ${filter2} WHERE contractor_details.category = ? AND contractors.status = 1) t ${filter3}`
-        return database.query(query, [params.category])
+        return database.query(query, [category])
     }
 
     static featured () {
