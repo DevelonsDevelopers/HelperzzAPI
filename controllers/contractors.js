@@ -170,7 +170,7 @@ exports.getAllAssignedContractors = async (req, res, next) => {
 exports.getContractorsByCategory = async (req, res, next) => {
     try {
         const {category} = req.params
-        const [contractors] = await Contractor.fetchByCategory(category)
+        const [contractors] = await Contractor.fetchByCategory(category, req.body)
         res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
         if (!error.statusCode) {
