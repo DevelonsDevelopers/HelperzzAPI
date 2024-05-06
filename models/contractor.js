@@ -46,6 +46,10 @@ module.exports = class Contractor {
         return database.query(query, [category])
     }
 
+    static fetchBySingleCategory (category) {
+        return database.query('SELECT contractors.*, contractor_details.*, categories.name as category_name FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category WHERE contractors.status = 1 AND contractor_details.category = ? LIMIT 5', [category])
+    }
+
     static featured () {
         return database.query('SELECT contractors.*, contractor_details.*, categories.name as category_name FROM contractors INNER JOIN contractor_details ON contractor_details.contractor = contractors.id INNER JOIN categories ON categories.id = contractor_details.category WHERE contractors.status = 1 AND contractors.featured = 1')
     }
