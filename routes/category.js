@@ -17,5 +17,6 @@ router.delete('/delete/:id', controller.deleteCategory);
 router.put('/status', controller.updateCategoryStatus)
 router.put('/featured', controller.updateCategoryFeatured)
 router.put('/popular', controller.updateCategoryPopular)
+router.put('/banner', controller.updateCategoryBanner)
 
 module.exports = router;

@@ -57,4 +57,8 @@ module.exports = class Category {
     static changePopular(params) {
         return database.query('UPDATE categories SET popular = ? WHERE (id = ?)', [params.popular, params.id])
     }
+
+    static changeBanner(params) {
+        return database.query('UPDATE categories SET banner = ? WHERE (id = ?)', [params.banner, params.id])
+    }
 }

@@ -235,3 +235,21 @@ exports.updateCategoryPopular = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.updateCategoryBanner = async (req, res, next) => {
+    try {
+        const [result] = await Category.changeBanner(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "Category Popular Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
