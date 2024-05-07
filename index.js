@@ -5,13 +5,7 @@ const path = require("path");
 const multer = require('multer')
 require('dotenv').config()
 const {Server} = require("socket.io");
-const fs = require('fs');
 const { createServer } = require('http')
-
-// const options = {
-//     key: fs.readFileSync('privkey.pem'),
-//     cert: fs.readFileSync('fullchain.pem')
-// };
 
 const app = express()
 const server = createServer(app)

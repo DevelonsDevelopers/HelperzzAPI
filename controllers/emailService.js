@@ -17,15 +17,15 @@ function randomize(length) {
 exports.contractorEmail = async (req, res, next) => {
     let email = req.body.email;
     let transporter = nodemailer.createTransport({
-        host: 'smtp-relay.brevo.com',
+        host: 'smtp.gmail.com',
         port: 587,
         auth: {
-            user: "tayyabrana5999@gmail.com",
-            pass: "OaNLG5CP2HMyV8IA"
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
         }
     })
     message = {
-        from: "tayyabrana5999@gmail.com",
+        from: "admin@helperzz.com",
         // to: "tayyabrana5999@gmail.com, bimalntb@gmail.com, abubakar.4983763@gmail.com",
         to: email,
         subject: "Job Invitation",
@@ -52,15 +52,15 @@ exports.customerForgotPassword = async (req, res, next) => {
     let token = randomize(20) + new Date().valueOf() + randomize(10)
     await Customer.setToken({ email: email, reset_token: token })
     let transporter = nodemailer.createTransport({
-        host: 'smtp-relay.brevo.com',
+        host: 'smtp.gmail.com',
         port: 587,
         auth: {
-            user: "tayyabrana5999@gmail.com",
-            pass: "OaNLG5CP2HMyV8IA"
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
         }
     })
     message = {
-        from: "tayyabrana5999@gmail.com",
+        from: "admin@helperzz.com",
         to: email,
         subject: "Reset Password",
         text:`You can reset password using this link https://staging.helperzz.com/new-password/token/${token}` ,
