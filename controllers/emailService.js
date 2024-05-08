@@ -219,7 +219,7 @@ exports.acceptContractor = async (email, content) => {
         to: email,
         subject: "Congratulations! You are live",
         text:`Thank you for taking your time. You will start receiving leads from customer soon` ,
-        html: content
+        html: `${content}`
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -244,7 +244,7 @@ exports.rejectContractor = async (email, content) => {
         to: email,
         subject: "We're sorry",
         text:`You are currently not eligible`,
-        html: content
+        html: `${content}`
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
