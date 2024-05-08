@@ -205,7 +205,7 @@ exports.approveReview = async (req, res, next) => {
     })
 }
 
-exports.acceptContractor = async (email) => {
+exports.acceptContractor = async (email, content) => {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -219,7 +219,7 @@ exports.acceptContractor = async (email) => {
         to: email,
         subject: "Congratulations! You are live",
         text:`Thank you for taking your time. You will start receiving leads from customer soon` ,
-        html: req.body.content
+        html: content
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -230,7 +230,7 @@ exports.acceptContractor = async (email) => {
     })
 }
 
-exports.rejectContractor = async (email) => {
+exports.rejectContractor = async (email, content) => {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -243,8 +243,8 @@ exports.rejectContractor = async (email) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "We're sorry",
-        text:`You are currently not eligible` ,
-        html: req.body.content
+        text:`You are currently not eligible`,
+        html: content
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {

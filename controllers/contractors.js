@@ -294,7 +294,7 @@ exports.approveContractor = async (req, res, next) => {
         const {id} = req.params
         const [result] = await Contractor.approve(id)
         const [[contractor]] = await Contractor.fetch(id)
-        await mailer.acceptContractor(contractor.email)
+        await mailer.acceptContractor(contractor.email, req.body.content)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1) {
@@ -315,7 +315,7 @@ exports.rejectContractor = async (req, res, next) => {
         const {id} = req.params
         const [result] = await Contractor.reject(id)
         const [[contractor]] = await Contractor.fetch(id)
-        await mailer.rejectContractor(contractor.email)
+        await mailer.rejectContractor(contractor.email, req.body.content)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1) {
