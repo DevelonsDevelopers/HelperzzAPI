@@ -64,12 +64,6 @@ exports.customerForgotPassword = async (req, res, next) => {
         to: email,
         subject: "Reset Password",
         text:`You can reset password using this link https://staging.helperzz.com/new-password/token/${token}` ,
-        // html: template({
-        //     name: "Bridges Inc.",
-        //     customer: "David Brown",
-        //     job: "Need to Repair Roof",
-        //     details: "My roof is badly damaged by some aliens from space directly landed on my roof"
-        // })
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -79,4 +73,210 @@ exports.customerForgotPassword = async (req, res, next) => {
         }
     })
 
+}
+
+exports.customerSetPassword = async (req, res, next) => {
+    let email = req.body.email;
+    let token = randomize(20) + new Date().valueOf() + randomize(10)
+    await Customer.setToken({ email: email, reset_token: token })
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "Set Password",
+        text:`You can set password using this link https://staging.helperzz.com/new-password/token/${token}` ,
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+
+}
+
+exports.contractorRegistration = async (req, res, next) => {
+    let email = req.body.email;
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "We will be in touch shortly",
+        text:`Thank you for showing interest in Helperzz, We'll get back to you shortly` ,
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+}
+
+exports.verifyEmail = async (req, res, next) => {
+    let email = req.body.email;
+    let token = randomize(20) + new Date().valueOf() + randomize(10)
+    await Customer.setToken({ email: email, reset_token: token })
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "Successfully Registered with Helperzz.com",
+        text:`Please verify your lead in order to start getting contractors requests using this link https://staging.helperzz.com/verify-account/token/${token}` ,
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+}
+
+exports.approveLead = async (req, res, next) => {
+    let email = req.body.email;
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "Your lead is approved",
+        text:`You'll start getting contractor requests shortly` ,
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+}
+
+exports.approveReview = async (req, res, next) => {
+    let email = req.body.email;
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "Your Review is live",
+        text:`Thank you for taking your time. Your feedback matters for us` ,
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+}
+
+exports.acceptContractor = async (email) => {
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "Congratulations! You are live",
+        text:`Thank you for taking your time. You will start receiving leads from customer soon` ,
+        html: req.body.content
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+}
+
+exports.rejectContractor = async (email) => {
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "We're sorry",
+        text:`You are currently not eligible` ,
+        html: req.body.content
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
+}
+
+exports.infoContractor = async (req, res, next) => {
+    let email = req.body.email;
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "We're sorry",
+        text:`You are currently not eligible` ,
+        html: req.body.content
+    }
+    transporter.sendMail(message, function (err, info) {
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
+    })
 }

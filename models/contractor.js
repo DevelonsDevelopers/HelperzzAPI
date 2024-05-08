@@ -70,4 +70,11 @@ module.exports = class Contractor {
         return database.query('UPDATE contractors SET featured = ? WHERE (id = ?)', [params.featured, params.id])
     }
 
+    static approve(contractor){
+        return database.query('UPDATE contractors SET status = 1, checked = 1 WHERE (id = ?)', [contractor])
+    }
+
+    static reject(contractor){
+        return database.query('UPDATE contractors SET status = 2, checked = 1 WHERE (id = ?)', [contractor])
+    }
 }

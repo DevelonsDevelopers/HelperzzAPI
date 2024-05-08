@@ -48,6 +48,8 @@ router.put('/update', controller.updateContractor)
 router.delete('/delete/:id', controller.deleteContractor);
 router.put('/status', controller.updateContractorStatus)
 router.put('/featured', controller.updateContractorFeatured)
+router.get('/approve/:id', controller.approveContractor)
+router.get('/reject/:id', controller.rejectContractor)
 router.get('/filters', controller.getFilters)
 
 module.exports = router;

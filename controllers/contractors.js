@@ -13,6 +13,7 @@ const ContractorRequests = require('../models/requestContractor')
 const Highlight = require('../models/highlight')
 const Language = require('../models/language')
 const Category = require('../models/category')
+const mailer = require('../controllers/emailService')
 
 exports.createContractor = async (req, res, next) => {
     try {
@@ -278,6 +279,48 @@ exports.updateContractorFeatured = async (req, res, next) => {
         if (result.changedRows === 1) {
             success = true
             message = "Contractor Featured Updated Successfully"
+        }
+        res.status(202).json({responseCode: 202, message: message, success: success})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.approveContractor = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        const [result] = await Contractor.approve(id)
+        const [[contractor]] = await Contractor.fetch(id)
+        await mailer.acceptContractor(contractor.email)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1) {
+            success = true
+            message = "Contractor Approved Successfully"
+        }
+        res.status(202).json({responseCode: 202, message: message, success: success})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.rejectContractor = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        const [result] = await Contractor.reject(id)
+        const [[contractor]] = await Contractor.fetch(id)
+        await mailer.rejectContractor(contractor.email)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1) {
+            success = true
+            message = "Contractor Rejected Successfully"
         }
         res.status(202).json({responseCode: 202, message: message, success: success})
     } catch (error) {
