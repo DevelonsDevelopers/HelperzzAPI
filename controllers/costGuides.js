@@ -26,6 +26,19 @@ exports.getCostGuide = async (req, res, next) => {
     }
 }
 
+exports.getCostGuideByTag = async (req, res, next) => {
+    try {
+        const { tag } = req.params
+        const [[costGuide]] = await CostGuide.fetch(tag)
+        res.status(201).json({ responseCode: 201, message: "Cost Guide fetched Successfully", costGuide: costGuide })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllCostGuides = async (req, res, next) => {
     try {
         const [costGuides] = await CostGuide.fetchAll()

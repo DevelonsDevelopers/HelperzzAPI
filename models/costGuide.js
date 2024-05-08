@@ -10,6 +10,11 @@ module.exports = class costGuides {
         return database.query('SELECT * FROM cost_guides WHERE id = ?', [id])
     }
 
+    static fetchByTag (tag) {
+        let name = tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM cost_guides WHERE UPPER(title) = ?', [name])
+    }
+
     static fetchAll () {
         return database.query('SELECT * FROM cost_guides')
     }
