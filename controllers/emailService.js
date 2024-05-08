@@ -243,7 +243,7 @@ exports.rejectContractor = async (email, content) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "We're sorry",
-        text:`You are currently not eligible`,
+        // text:`You are currently not eligible`,
         html: `${content}`
     }
     transporter.sendMail(message, function (err, info) {

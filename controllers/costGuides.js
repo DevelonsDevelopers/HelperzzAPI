@@ -29,7 +29,7 @@ exports.getCostGuide = async (req, res, next) => {
 exports.getCostGuideByTag = async (req, res, next) => {
     try {
         const { tag } = req.params
-        const [[costGuide]] = await CostGuide.fetch(tag)
+        const [[costGuide]] = await CostGuide.fetchByTag(tag)
         res.status(201).json({ responseCode: 201, message: "Cost Guide fetched Successfully", costGuide: costGuide })
     } catch (error) {
         if (!error.statusCode){
