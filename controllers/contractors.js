@@ -315,6 +315,7 @@ exports.rejectContractor = async (req, res, next) => {
         const {id} = req.params
         const [result] = await Contractor.reject(id)
         const [[contractor]] = await Contractor.fetch(id)
+        console.log(req.body)
         await mailer.rejectContractor(contractor.email, req.body.content)
         let success = false
         let message = "Failed to Update"
