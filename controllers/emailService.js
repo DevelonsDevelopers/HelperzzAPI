@@ -1,4 +1,5 @@
 const {template} = require("../util/template");
+const {activateEmail} = require("../util/activateEmail");
 const nodemailer = require('nodemailer');
 const Customer = require("../models/customer");
 
@@ -75,8 +76,7 @@ exports.customerForgotPassword = async (req, res, next) => {
 
 }
 
-exports.customerSetPassword = async (req, res, next) => {
-    let email = req.body.email;
+exports.customerSetPassword = async (email) => {
     let token = randomize(20) + new Date().valueOf() + randomize(10)
     await Customer.setToken({ email: email, reset_token: token })
     let transporter = nodemailer.createTransport({
@@ -91,7 +91,7 @@ exports.customerSetPassword = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Set Password",
-        text:`You can set password using this link https://staging.helperzz.com/new-password/token/${token}` ,
+        text:`You can set password using this link https://staging.helperzz.com/set-password/token/${token}` ,
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -104,7 +104,6 @@ exports.customerSetPassword = async (req, res, next) => {
 }
 
 exports.contractorRegistration = async (req, res, next) => {
-    let email = req.body.email;
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -115,7 +114,7 @@ exports.contractorRegistration = async (req, res, next) => {
     })
     message = {
         from: "admin@helperzz.com",
-        to: email,
+        to: req.body.email,
         subject: "We will be in touch shortly",
         text:`Thank you for showing interest in Helperzz, We'll get back to you shortly` ,
     }
@@ -128,8 +127,7 @@ exports.contractorRegistration = async (req, res, next) => {
     })
 }
 
-exports.verifyEmail = async (req, res, next) => {
-    let email = req.body.email;
+exports.verifyEmail = async (email) => {
     let token = randomize(20) + new Date().valueOf() + randomize(10)
     await Customer.setToken({ email: email, reset_token: token })
     let transporter = nodemailer.createTransport({
@@ -143,8 +141,10 @@ exports.verifyEmail = async (req, res, next) => {
     message = {
         from: "admin@helperzz.com",
         to: email,
-        subject: "Successfully Registered with Helperzz.com",
-        text:`Please verify your lead in order to start getting contractors requests using this link https://staging.helperzz.com/verify-account/token/${token}` ,
+        subject: "Activate your account",
+        html: activateEmail({
+            link: `https://staging.helperzz.com/verify-account/token/${token}`,
+        })
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {

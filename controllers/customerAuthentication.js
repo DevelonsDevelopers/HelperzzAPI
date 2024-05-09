@@ -1,6 +1,7 @@
 const User = require('../models/customer')
 const Auth = require('../middleware/authMiddleware')
 const Customer = require("../models/customer");
+const Email = require("../controllers/emailService");
 
 exports.Register = async (req, res, next) => {
     try {
@@ -11,6 +12,7 @@ exports.Register = async (req, res, next) => {
         } else {
             const [result] = await User.create(req.body)
             const [[customer]] = await Customer.fetch(result.insertId)
+            await Email.verifyEmail(customer.email)
             res.status(201).json({ responseCode: 201, message: "Successfully Registered!", user: customer })
         }
     } catch (error) {

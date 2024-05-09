@@ -12,10 +12,6 @@ module.exports = class Customer {
         return database.query('INSERT INTO customers (name, email, phone, address) VALUES (?, ?, ?, ?)', [params.name, params.email, params.phone, params.street])
     }
 
-    static setPassword (params){
-        return database.query('')
-    }
-
     static fetch(id) {
         return database.query('SELECT * FROM customers WHERE id = ?', [id])
     }
@@ -31,6 +27,15 @@ module.exports = class Customer {
     static async updateByToken (params) {
         const hash = await Auth.hashPassword(params.password)
         return database.query('UPDATE customers SET password = ? WHERE (reset_token = ?)', [hash, params.token])
+    }
+
+    static async approveByToken (params) {
+        const hash = await Auth.hashPassword(params.password)
+        return database.query('UPDATE customers SET password = ?, email_verified = ? WHERE (reset_token = ?)', [hash, true, params.token])
+    }
+
+    static async verifyEmail (params) {
+        return database.query('UPDATE customers SET email_verified = ? WHERE (reset_token = ?)', [true, params.token])
     }
 
     static setToken(params){
