@@ -142,16 +142,18 @@ exports.verifyEmail = async (email) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Activate your account",
+        text: "",
         html: activateEmail({
             link: `https://staging.helperzz.com/verify-account/token/${token}`,
         })
     }
     transporter.sendMail(message, function (err, info) {
-        if (err) {
-            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
-        } else {
-            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
-        }
+        console.log(err + " --- " + info)
+        // if (err) {
+        //     res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        // } else {
+        //     res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        // }
     })
 }
 
