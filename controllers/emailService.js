@@ -1,5 +1,6 @@
 const {template} = require("../util/template");
 const {activateEmail} = require("../util/activateEmail");
+const {contractorJoin} = require("../util/contractorJoin");
 const nodemailer = require('nodemailer');
 const Customer = require("../models/customer");
 
@@ -116,7 +117,8 @@ exports.contractorRegistration = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: req.body.email,
         subject: "We will be in touch shortly",
-        text:`Thank you for showing interest in Helperzz, We'll get back to you shortly` ,
+        text:`` ,
+        html: contractorJoin()
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
