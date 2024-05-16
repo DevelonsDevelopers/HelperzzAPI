@@ -125,7 +125,7 @@ exports.contractorRegistration = async (req, res, next) => {
         to: req.body.email,
         subject: "We will be in touch shortly",
         text:`` ,
-        html: contractorJoin()
+        html: contractorJoin(req.body.name)
     }
     transporter.sendMail(message, function (err, info) {
         // if (err) {

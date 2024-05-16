@@ -1,4 +1,4 @@
-function contractorJoin() {
+function contractorJoin({ name }) {
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +19,7 @@ function contractorJoin() {
 </head>
 <body>
     <div style=" width: 60%; margin: auto;  padding: 20px;">
-        <h3 style="color: #2E2C32; font-weight: 450; margin-top: -3px; ">Hello (contractor-name)
+        <h3 style="color: #2E2C32; font-weight: 450; margin-top: -3px; ">Hello ${name}
             </h3>
         <h3 style="color: #2E2C32; font-weight: 450; margin-top: 23px; ">Thank you for your interest in joining Helperzz as a professional. We're currently in the     </h3>
       
