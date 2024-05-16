@@ -72,7 +72,8 @@ exports.customerForgotPassword = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Reset Password",
-        html: forgotPassword(`https://staging.helperzz.com/new-password/token/${token}`)
+        html: forgotPassword({ link: `https://staging.helperzz.com/new-password/token/${token}`
+    })
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -99,7 +100,8 @@ exports.customerSetPassword = async (email) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Set Password",
-        html: setPassword(`https://staging.helperzz.com/set-password/token/${token}`)
+        html: setPassword({ link: `https://staging.helperzz.com/set-password/token/${token}`
+    })
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -125,7 +127,7 @@ exports.contractorRegistration = async (req, res, next) => {
         to: req.body.email,
         subject: "We will be in touch shortly",
         text:`` ,
-        html: contractorJoin(req.body.name)
+        html: contractorJoin({ name: req.body.name})
     }
     transporter.sendMail(message, function (err, info) {
         // if (err) {
@@ -152,7 +154,8 @@ exports.verifyEmail = async (email) => {
         to: email,
         subject: "Activate your account",
         text: "",
-        html: activateEmail(`https://staging.helperzz.com/verify-account/token/${token}`)
+        html: activateEmail({ html: `https://staging.helperzz.com/verify-account/token/${token}`
+    })
     }
     transporter.sendMail(message, function (err, info) {
         console.log(err + " --- " + info)
@@ -225,7 +228,7 @@ exports.acceptContractor = async (email, content) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Approval of Contractor Documents",
-        html: approveContractor(content)
+        html: approveContractor({ html: content})
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -249,7 +252,7 @@ exports.rejectContractor = async (email, content) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Notification Regarding Your Application",
-        html: rejectContractor(content)
+        html: rejectContractor({ html: content})
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -274,7 +277,7 @@ exports.infoContractor = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Request for Additional Documents",
-        html: requestInfo(req.body.content)
+        html: requestInfo( { html: req.body.content})
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
