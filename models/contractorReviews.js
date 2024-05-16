@@ -18,6 +18,10 @@ module.exports = class contractorReviews {
         return database.query('SELECT * FROM contractors_reviews WHERE id = ?', [id])
     }
 
+    static fetchCustomerEmail(id) {
+        return database.query('SELECT customers.email FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractors_reviews.id = ?', [id])
+    }
+
     static fetchAll() {
         return database.query('SELECT contractors_reviews.*, contractor_details.company_name, customers.name as customer_name, customers.email FROM contractors_reviews INNER JOIN contractor_details ON contractor_details.contractor = contractors_reviews.contractor INNER JOIN customers ON customers.id = contractors_reviews.user ORDER BY contractors_reviews.id DESC')
     }

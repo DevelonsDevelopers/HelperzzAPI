@@ -19,22 +19,19 @@ function contractorJoin() {
 </head>
 <body>
     <div style=" width: 60%; margin: auto;  padding: 20px;">
-        <h3 style="color: #000001; font-weight: 450; margin-top: -3px; max-width: 70%;">We are pleased to inform you that your lead submission has been received successfully.
-
+        <h3 style="color: #2E2C32; font-weight: 450; margin-top: -3px; ">Hello (contractor-name)
             </h3>
-         <h4 style="color: #2E2C32; font-weight: 400; margin-top: -3px;max-width: 70% ">Our team will review the information provided and get back to you as soon as possible.
-         <h4 style="color: #2E2C32; font-weight: 400; margin-top: -3px;max-width: 70% ">If you have any questions or need further assistance, feel free to reach out to us at:
-
+        <h3 style="color: #2E2C32; font-weight: 450; margin-top: 23px; ">Thank you for your interest in joining Helperzz as a professional. We're currently in the     </h3>
+      
+          <h4 style="color: #2E2C32; font-weight: 450; margin-top: -9px; ">process</h4>
+         <h4 style="color: #2E2C32; font-weight: 350; margin-top: -9px; ">of review your profile.</h4>
+          <h4 style="color: #2E2C32; font-weight: 350; margin-top: 10px; ">If we have further questions we will contact you by phone or email. Stay tuned!
         </h4>
-         <br>
-         <a href="mailto:admin@helperzz.com" style="background-color: #45FF00; padding: 10px 30px; border: 1px solid gray; border-radius: 5px; cursor: pointer; text-decoration: none; color: black;">
-            Customer Support Email
-        </a>
-        <h5 style="color: #2E2C32; font-weight: 450;">Thank you </h5>
-        <h5 style="color: #2E2C32; font-weight: 450; margin-top: -10px;">Helperzz Team</h5>
-        <h5 style="color: #2E2C32; font-weight: 450; margin-top: -10px;">www.helperzz.com</h5>
-        <h5 style="color: #2E2C32; font-weight: 450; margin-top: -10px;">111222333</h5>
-
+        <h5 style="color: #2E2C32; font-weight: 450;">Thank you,</h5>
+        <h5 style="color: #2E2C32; font-weight: 450; margin-top: -10px; margin-bottom: 7px;">Helperzz Team</h5>
+        <a href="#" style="color: #2E2C32; font-weight: 450; margin-top: -4px; color: blue;">www.helperzz.com</a>
+        
+  
 </div>
 </body>
 </html>`

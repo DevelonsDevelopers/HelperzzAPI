@@ -1,4 +1,6 @@
 const ServiceRequest = require('../models/serviceRequest')
+const ContractorReviews = require("../models/contractorReviews");
+const Email = require("./emailService");
 
 exports.createServiceRequest = async (req, res, next) => {
     try {
@@ -55,6 +57,8 @@ exports.acceptRequest = async (req, res, next) => {
     try {
         const { id } = req.params
         const [result] = await ServiceRequest.accept(id)
+        const [[customer]] = await ServiceRequest.fetch(id)
+        await Email.approveLead(customer.email)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1){

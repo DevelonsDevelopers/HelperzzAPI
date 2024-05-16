@@ -1,37 +1,54 @@
 function verification(
     {
+        name,
         url
     }) {
     return `<!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Verify Your Email Address</title>
-    </head>
-    
-    <body style="margin: 0; padding: 0; background-color: #f2f2f2; font-family: Arial, sans-serif;">
-        <div style="max-width: 600px; margin: 0 auto;">
-            <table cellpadding="0" cellspacing="0" width="100%" style="margin-top: 50px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
-                <tr>
-                    <td align="center" style="padding: 40px;">
-                        <h1 style="color: #007bff; margin-bottom: 20px;">Verify your email address</h1>
-                        <p style="font-size: 16px; color: #666; margin-bottom: 30px;">Please confirm that you want to use this as your Helperzz account email address. Once it's done you will be able to get quotes!</p>
-                        <a href="${url}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 5px;">Verify Now</a>
-                        <p style="font-size: 12px; color: #888; margin-top: 20px;">Or paste this link into your browser: <br> ${url}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" style="background-color: #007bff; color: #fff; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 20px;">
-                    Helperzz.com &copy; 2024. All rights reserved.
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </body>
-    
-    </html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<style>
+    *{
+        font-family: "Montserrat", sans-serif;
+    }
+</style>
+
+</head>
+<body>
+    <div style=" width: 60%; margin: auto;  padding: 20px;">
+        <h3 style="color: #2E2C32; font-weight: 450; margin-top: -3px; ">Congratulations ${name}, your customer account in now fully verified
+            </h3>
+      
+        <h4 style="color: #2E2C32; font-weight: 350; margin-top: 13px; ">Looking to find a contractor to perform a repair in your home? fix that long ignored issue?
+        </h4>
+        <h4 style="color: #2E2C32; font-weight: 350; margin-top: -13px; ">click below to get free quotes from our top verified professionals.
+        </h4>
+        
+        <br>
+        <a href="${url}" style="background-color: #45FF00; padding: 10px 30px; border: 1px solid gray; border-radius: 5px; cursor: pointer; text-decoration: none; color: black;">
+            GET A FREE QUOTE
+        </a>
+        <br>
+        <br>
+        <br>
+        <a href="#" style="color: blue; font-weight: 350;  ">[insert verification link here]
+        </a>
+        <br>
+        <br>
+         <h5 style="color: #2E2C32; font-weight: 450; margin-top: -10px; margin-bottom: 7px;">Helperzz Team</h5>
+        <a href="#" style="font-weight: 450; margin-top: -4px; color: blue;">www.helperzz.com</a>
+      
+ 
+</div>
+</body>
+</html>
     `
         ;
 };

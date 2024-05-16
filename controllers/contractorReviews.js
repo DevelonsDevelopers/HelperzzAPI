@@ -1,5 +1,6 @@
 const ContractorReviews = require("../models/contractorReviews");
 const Category = require("../models/category");
+const Email = require("./emailService");
 
 exports.createContractorReview = async (req, res, next) => {
     try {
@@ -100,6 +101,8 @@ exports.approveReview = async (req, res, next) => {
     try {
         const { id } = req.params
         const [result] = await ContractorReviews.approve(id)
+        const [[customer]] = await ContractorReviews.fetchCustomerEmail(id)
+        await Email.approveReview(customer.email)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1){

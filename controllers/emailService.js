@@ -3,6 +3,13 @@ const {activateEmail} = require("../util/activateEmail");
 const {contractorJoin} = require("../util/contractorJoin");
 const nodemailer = require('nodemailer');
 const Customer = require("../models/customer");
+const {requestInfo} = require("../util/requestInfo");
+const {rejectContractor} = require("../util/rejectContractor");
+const {approveContractor} = require("../util/approveContractor");
+const {reviewApproval} = require("../util/reviewApproval");
+const {leadApproval} = require("../util/leadApproval");
+const {setPassword} = require("../util/setPassword");
+const {forgotPassword} = require("../util/forgotPassword");
 
 function randomize(length) {
     let result = '';
@@ -65,7 +72,7 @@ exports.customerForgotPassword = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Reset Password",
-        text:`You can reset password using this link https://staging.helperzz.com/new-password/token/${token}` ,
+        html: forgotPassword(`https://staging.helperzz.com/new-password/token/${token}`)
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -92,7 +99,7 @@ exports.customerSetPassword = async (email) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Set Password",
-        text:`You can set password using this link https://staging.helperzz.com/set-password/token/${token}` ,
+        html: setPassword(`https://staging.helperzz.com/set-password/token/${token}`)
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -121,11 +128,11 @@ exports.contractorRegistration = async (req, res, next) => {
         html: contractorJoin()
     }
     transporter.sendMail(message, function (err, info) {
-        if (err) {
-            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
-        } else {
-            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
-        }
+        // if (err) {
+        //     res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        // } else {
+        //     res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        // }
     })
 }
 
@@ -145,9 +152,7 @@ exports.verifyEmail = async (email) => {
         to: email,
         subject: "Activate your account",
         text: "",
-        html: activateEmail({
-            link: `https://staging.helperzz.com/verify-account/token/${token}`,
-        })
+        html: activateEmail(`https://staging.helperzz.com/verify-account/token/${token}`)
     }
     transporter.sendMail(message, function (err, info) {
         console.log(err + " --- " + info)
@@ -159,8 +164,7 @@ exports.verifyEmail = async (email) => {
     })
 }
 
-exports.approveLead = async (req, res, next) => {
-    let email = req.body.email;
+exports.approveLead = async (email) => {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -173,7 +177,7 @@ exports.approveLead = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Your lead is approved",
-        text:`You'll start getting contractor requests shortly` ,
+        html: leadApproval()
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -184,8 +188,7 @@ exports.approveLead = async (req, res, next) => {
     })
 }
 
-exports.approveReview = async (req, res, next) => {
-    let email = req.body.email;
+exports.approveReview = async (email) => {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -198,7 +201,7 @@ exports.approveReview = async (req, res, next) => {
         from: "admin@helperzz.com",
         to: email,
         subject: "Your Review is live",
-        text:`Thank you for taking your time. Your feedback matters for us` ,
+        html: reviewApproval()
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -221,9 +224,8 @@ exports.acceptContractor = async (email, content) => {
     message = {
         from: "admin@helperzz.com",
         to: email,
-        subject: "Congratulations! You are live",
-        text:`Thank you for taking your time. You will start receiving leads from customer soon` ,
-        html: `${content}`
+        subject: "Approval of Contractor Documents",
+        html: approveContractor(content)
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -246,9 +248,8 @@ exports.rejectContractor = async (email, content) => {
     message = {
         from: "admin@helperzz.com",
         to: email,
-        subject: "We're sorry",
-        // text:`You are currently not eligible`,
-        html: `${content}`
+        subject: "Notification Regarding Your Application",
+        html: rejectContractor(content)
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
@@ -272,9 +273,8 @@ exports.infoContractor = async (req, res, next) => {
     message = {
         from: "admin@helperzz.com",
         to: email,
-        subject: "We're sorry",
-        text:`You are currently not eligible` ,
-        html: req.body.content
+        subject: "Request for Additional Documents",
+        html: requestInfo(req.body.content)
     }
     transporter.sendMail(message, function (err, info) {
         if (err) {
