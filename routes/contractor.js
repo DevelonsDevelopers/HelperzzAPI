@@ -50,6 +50,7 @@ router.put('/status', controller.updateContractorStatus)
 router.put('/featured', controller.updateContractorFeatured)
 router.post('/approve/:id', controller.approveContractor)
 router.post('/reject/:id', controller.rejectContractor)
+router.post('/check', controller.checkEmailCompany)
 router.get('/filters', controller.getFilters)
 
 module.exports = router;

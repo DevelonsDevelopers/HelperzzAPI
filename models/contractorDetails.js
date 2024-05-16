@@ -21,4 +21,8 @@ module.exports = class ContractorDetails {
     static recentContractors () {
         return database.query('SELECT contractor_details.*, categories.name as category_name, contractors.image FROM contractor_details INNER JOIN categories ON categories.id = contractor_details.category INNER JOIN contractors ON contractors.id = contractor_details.contractor ORDER BY contractor DESC LIMIT 6')
     }
+
+    static checkCompany (name) {
+        return database.query('SELECT id FROM contractor_details WHERE company_name = ?', [name])
+    }
 }

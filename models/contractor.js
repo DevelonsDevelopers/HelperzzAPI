@@ -77,4 +77,8 @@ module.exports = class Contractor {
     static reject(contractor){
         return database.query('UPDATE contractors SET status = 2, checked = 1 WHERE (id = ?)', [contractor])
     }
+
+    static checkEmail(email){
+        return database.query('SELECT id FROM contractors WHERE email = ?', [email])
+    }
 }

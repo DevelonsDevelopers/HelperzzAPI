@@ -315,7 +315,6 @@ exports.rejectContractor = async (req, res, next) => {
         const {id} = req.params
         const [result] = await Contractor.reject(id)
         const [[contractor]] = await Contractor.fetch(id)
-        console.log(req.body)
         await mailer.rejectContractor(contractor.email, req.body.content)
         let success = false
         let message = "Failed to Update"
@@ -324,6 +323,30 @@ exports.rejectContractor = async (req, res, next) => {
             message = "Contractor Rejected Successfully"
         }
         res.status(202).json({responseCode: 202, message: message, success: success})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.checkEmailCompany = async (req, res, next) => {
+    try {
+        const { email, company } = req.body
+        const [emailCheck] = await Contractor.checkEmail(email)
+        const [companyCheck] = await ContractorDetails.checkCompany(company)
+        let msg = ''
+        let response = 407
+        if (emailCheck.length > 1) {
+            msg = msg + "Email already exist!"
+            response+=1
+        }
+        if (companyCheck.length > 1) {
+            msg = msg + "Company already exist!"
+            response+=1
+        }
+        res.status(202).json({responseCode: response, message: msg})
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500
