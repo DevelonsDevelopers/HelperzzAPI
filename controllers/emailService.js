@@ -10,6 +10,7 @@ const {reviewApproval} = require("../util/reviewApproval");
 const {leadApproval} = require("../util/leadApproval");
 const {setPassword} = require("../util/setPassword");
 const {forgotPassword} = require("../util/forgotPassword");
+const {leadSubmit} = require("../util/leadSubmit");
 
 function randomize(length) {
     let result = '';
@@ -188,6 +189,30 @@ exports.approveLead = async (email) => {
         } else {
             res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
         }
+    })
+}
+
+exports.leadSubmit = async (email, name) => {
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: "admin@helperzz.com",
+            pass: "kpeq gzan azkr qncw"
+        }
+    })
+    message = {
+        from: "admin@helperzz.com",
+        to: email,
+        subject: "Your lead is approved",
+        html: leadSubmit({ name: name, url: "https://staging.helperzz.com/contact-us" })
+    }
+    transporter.sendMail(message, function (err, info) {
+        // if (err) {
+        //     res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        // } else {
+        //     res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        // }
     })
 }
 

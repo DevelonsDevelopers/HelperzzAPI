@@ -1,5 +1,4 @@
 const City = require('../models/city')
-const Highlight = require("../models/highlight");
 
 exports.createCity = async (req, res, next) => {
     try {

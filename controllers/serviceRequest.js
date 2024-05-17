@@ -6,6 +6,8 @@ exports.createServiceRequest = async (req, res, next) => {
     try {
         const [result] = await ServiceRequest.create(req.body)
         const [[serviceRequest]] = await ServiceRequest.fetch(result.insertId)
+        const [[customer]] = await ServiceRequest.fetch(result.insertId)
+        await Email.leadSubmit(customer.email, customer.name)
         global.io.emit("newRequest", serviceRequest)
         res.status(201).json({ responseCode: 201, message: "Service Request Created Successfully", serviceRequest: serviceRequest })
     } catch (error) {
