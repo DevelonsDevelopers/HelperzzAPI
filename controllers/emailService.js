@@ -204,7 +204,7 @@ exports.leadSubmit = async (email, name) => {
     message = {
         from: "admin@helperzz.com",
         to: email,
-        subject: "Your lead is approved",
+        subject: "Your lead received!",
         html: leadSubmit({ name: name, url: "https://staging.helperzz.com/contact-us" })
     }
     transporter.sendMail(message, function (err, info) {
