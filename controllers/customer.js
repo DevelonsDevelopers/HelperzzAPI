@@ -99,3 +99,31 @@ exports.verifyEmail = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.checkToken = async (req, res, next) => {
+    try {
+        const { token } = req.params
+        const [result] = await Customer.check(token)
+        let exist = false
+        let message = "Token Expired"
+        if (result.length > 0){
+            let serverToken = result[0].token
+            let serverTime = serverToken.substring(20, 33)
+            let clientTime = new Date().valueOf()
+            let Time = Number(serverTime) - Number(clientTime)
+            if (Time >= 3600000) {
+                exist = false
+                message = "Token Expired"
+            } else {
+                exist = true
+                message = "Token Active"
+            }
+        }
+        res.status(202).json({ responseCode: 202, message: message, exist: exist })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}

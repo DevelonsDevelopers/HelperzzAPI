@@ -7,5 +7,6 @@ router.get('/all', controller.getAllCustomers);
 router.put('/updatePassword', controller.updatePassword)
 router.put('/setPassword', controller.setPassword)
 router.put('/verifyEmail', controller.verifyEmail)
+router.get('/checkToken/:token', controller.checkToken)
 
 module.exports = router;

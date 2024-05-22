@@ -38,6 +38,10 @@ module.exports = class Customer {
         return database.query('UPDATE customers SET email_verified = ? WHERE (reset_token = ?)', [true, params.token])
     }
 
+    static async check (token) {
+        return database.query('SELECT token FROM customers WHERE token = ?', [token])
+    }
+
     static setToken(params){
         return database.query('UPDATE customers SET reset_token = ? WHERE (email = ?)', [params.reset_token, params.email])
     }
