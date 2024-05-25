@@ -39,7 +39,7 @@ module.exports = class Customer {
     }
 
     static async check (token) {
-        return database.query('SELECT token FROM customers WHERE reset_token = ?', [token])
+        return database.query('SELECT reset_token FROM customers WHERE reset_token = ?', [token])
     }
 
     static setToken(params){
