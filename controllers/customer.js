@@ -107,7 +107,7 @@ exports.checkToken = async (req, res, next) => {
         let exist = false
         let message = "Token Expired"
         if (result.length > 0){
-            let serverToken = result[0].token
+            let serverToken = result[0].reset_token
             let serverTime = serverToken.substring(20, 33)
             let clientTime = new Date().valueOf()
             let Time = Number(serverTime) - Number(clientTime)
