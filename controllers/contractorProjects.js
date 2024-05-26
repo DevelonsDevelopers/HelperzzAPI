@@ -38,6 +38,19 @@ exports.getProject = async (req, res, next) => {
     }
 }
 
+exports.getGallery = async (req, res, next) => {
+    try {
+        const { contractor } = req.params
+        const [gallery] = await ContractorProjects.fetchProjectGallery(contractor)
+        res.status(201).json({ responseCode: 201, message: "Projects Fetched Successfully", gallery: gallery })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getByContractors = async (req, res, next) => {
     try {
         const { contractor } = req.params

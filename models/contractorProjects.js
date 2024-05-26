@@ -14,6 +14,10 @@ module.exports = class contractorProjects {
         return database.query('SELECT * FROM contractors_projects WHERE id = ?', [id])
     }
 
+    static fetchProjectGallery(contractor) {
+        return database.query('SELECT contractor, project_images.* FROM contractors_projects INNER JOIN project_images ON project_images.project = contractors_projects.id WHERE contractor = ?', [contractor])
+    }
+
     static fetchByContractor(contractor) {
         return database.query('SELECT * FROM contractors_projects WHERE contractor = ?', [contractor])
     }
