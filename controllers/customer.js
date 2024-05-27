@@ -1,6 +1,5 @@
 const Customer = require('../models/customer')
 const Email = require('../controllers/emailService')
-const Contractor = require("../models/contractor");
 
 exports.createPasswordLessCustomer = async (req, res, next) => {
     try {
@@ -134,7 +133,7 @@ exports.checkToken = async (req, res, next) => {
 
 exports.updateCustomerStatus = async (req, res, next) => {
     try {
-        const [result] = await Contractor.changeStatus(req.body)
+        const [result] = await Customer.changeStatus(req.body)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1) {
