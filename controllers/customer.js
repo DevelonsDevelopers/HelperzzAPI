@@ -109,8 +109,11 @@ exports.checkToken = async (req, res, next) => {
         if (result.length > 0){
             let serverToken = result[0].reset_token
             let serverTime = serverToken.substring(20, 33)
+            console.log(serverTime)
             let clientTime = new Date().valueOf()
+            console.log(clientTime)
             let Time = Number(serverTime) - Number(clientTime)
+            console.log(Time)
             if (Time >= 3600000) {
                 exist = false
                 message = "Token Expired"
