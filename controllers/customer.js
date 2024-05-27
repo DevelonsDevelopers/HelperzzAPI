@@ -112,7 +112,7 @@ exports.checkToken = async (req, res, next) => {
             console.log(serverTime)
             let clientTime = new Date().valueOf()
             console.log(clientTime)
-            let Time = Number(serverTime) - Number(clientTime)
+            let Time = Number(clientTime) - Number(serverTime)
             console.log(Time)
             if (Time >= 3600000) {
                 exist = false
