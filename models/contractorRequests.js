@@ -7,11 +7,11 @@ module.exports = class contractorRequests {
     }
 
     static fetch(id) {
-        return database.query('SELECT * FROM contractor_requests WHERE id = ?', [id])
+        return database.query('SELECT contractor_requests.*, customers.name, customers.email, customers.phone, customers.address FROM contractor_requests INNER JOIN customers ON customers.id = contractor_requests.user WHERE contractor_requests.id = ?', [id])
     }
 
     static fetchAll() {
-        return database.query('SELECT * FROM contractor_requests')
+        return database.query('SELECT contractor_requests.*, customers.name as customer_name FROM contractor_requests INNER JOIN customers ON customers.id = contractor_requests.user')
     }
 
     static delete(id) {

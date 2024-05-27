@@ -11,7 +11,7 @@ module.exports = class Subcategory {
     }
 
     static fetchAll () {
-        return database.query('SELECT subcategories.*, categories.name as category_name FROM subcategories INNER JOIN categories ON categories.id = subcategories.category')
+        return database.query('SELECT subcategories.*, categories.name as category_name FROM subcategories INNER JOIN categories ON categories.id = subcategories.category ORDER BY subcategories.id DESC')
     }
 
     static fetchByCategory (id) {
