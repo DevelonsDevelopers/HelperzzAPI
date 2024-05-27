@@ -8,6 +8,6 @@ router.put('/updatePassword', controller.updatePassword)
 router.put('/setPassword', controller.setPassword)
 router.put('/verifyEmail', controller.verifyEmail)
 router.get('/checkToken/:token', controller.checkToken)
-router.put('/status', controller.checkToken)
+router.put('/status', controller.updateCustomerStatus)
 
 module.exports = router;
