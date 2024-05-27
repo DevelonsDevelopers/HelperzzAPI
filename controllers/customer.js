@@ -1,5 +1,6 @@
 const Customer = require('../models/customer')
 const Email = require('../controllers/emailService')
+const Contractor = require("../models/contractor");
 
 exports.createPasswordLessCustomer = async (req, res, next) => {
     try {
@@ -125,6 +126,24 @@ exports.checkToken = async (req, res, next) => {
         res.status(202).json({ responseCode: 202, message: message, exist: exist })
     } catch (error) {
         if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.updateCustomerStatus = async (req, res, next) => {
+    try {
+        const [result] = await Contractor.changeStatus(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1) {
+            success = true
+            message = "Customer Status Updated Successfully"
+        }
+        res.status(202).json({responseCode: 202, message: message, success: success})
+    } catch (error) {
+        if (!error.statusCode) {
             error.statusCode = 500
         }
         next(error)

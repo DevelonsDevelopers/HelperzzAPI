@@ -45,4 +45,8 @@ module.exports = class Customer {
     static setToken(params){
         return database.query('UPDATE customers SET reset_token = ? WHERE (email = ?)', [params.reset_token, params.email])
     }
+
+    static changeStatus(params){
+        return database.query('UPDATE customers SET status = ? WHERE (id = ?)', [params.status, params.id])
+    }
 }
