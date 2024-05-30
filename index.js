@@ -49,6 +49,7 @@ const languages = require('./routes/language')
 const successStories = require('./routes/successStories')
 const contractorRequests = require('./routes/contractorRequest')
 const contact = require('./routes/contact')
+const seo = require('./routes/seo')
 
 const port = process.env.PORT || 5050
 
@@ -98,6 +99,7 @@ database.getConnection().then(connection => {
     app.use('/api/successStory', successStories)
     app.use('/api/contractorRequests', contractorRequests)
     app.use('/api/contact', contact)
+    app.use('/api/seo', seo)
     app.use('/api/mailer', emailService)
 
     app.use(errorController.get404)
