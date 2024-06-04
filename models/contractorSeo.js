@@ -11,7 +11,7 @@ module.exports = class ContractorSeo {
     }
 
     static fetch (id) {
-        return database.query('SELECT * FROM contractor_seo WHERE id = ?', [id])
+        return database.query('SELECT * FROM contractor_seo WHERE contractor = ?', [id])
     }
 
 }
