@@ -1,5 +1,6 @@
 const Contractor = require('../models/contractor')
 const ContractorDetails = require('../models/contractorDetails')
+const ContractorSeo = require('../models/contractorSeo')
 const ContractorAwards = require('../models/contractorAwards')
 const ContractorAffiliations = require('../models/contractorAffiliations')
 const ContractorBadges = require('../models/contractorBadges')
@@ -46,6 +47,7 @@ exports.getContractorDetails = async (req, res, next) => {
         const {id} = req.params
         const [[contractor]] = await Contractor.fetch(id)
         const [[details]] = await ContractorDetails.fetch(id)
+        const [[seo]] = await ContractorSeo.fetch(id)
         const [awards] = await ContractorAwards.fetchByContractor(id)
         const [affiliations] = await ContractorAffiliations.fetchByContractor(id)
         const [badges] = await ContractorBadges.fetchByContractor(id)
@@ -70,6 +72,7 @@ exports.getContractorDetails = async (req, res, next) => {
             data: {
                 contractor: contractor,
                 details: details,
+                seo: seo,
                 awards: awards,
                 affiliations: affiliations,
                 badges: badges,
@@ -95,6 +98,7 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
         const {tag} = req.params
         const [[contractor]] = await Contractor.fetchByTag(tag)
         const [[details]] = await ContractorDetails.fetch(contractor.id)
+        const [[seo]] = await ContractorSeo.fetch(contractor.id)
         const [awards] = await ContractorAwards.fetchByContractor(contractor.id)
         const [affiliations] = await ContractorAffiliations.fetchByContractor(contractor.id)
         const [badges] = await ContractorBadges.fetchByContractor(contractor.id)
@@ -115,6 +119,7 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
             data: {
                 contractor: contractor,
                 details: details,
+                seo: seo,
                 awards: awards,
                 affiliations: affiliations,
                 badges: badges,
