@@ -26,17 +26,17 @@ exports.joinContractor = async (req, res, next) => {
         if (emailCheck.length > 1) {
             msg = msg + "Email already exist!"
             response+=1
-            return res.status(response).json({responseCode: response, message: "Contractor Added Successfully", joins: false})
+            return res.status(response).json({responseCode: response, message: "Contractor Added Successfully", joins: false, contractor: null})
         }
         if (companyCheck.length > 1) {
             msg = msg + "Company already exist!"
             response+=1
-            return res.status(response).json({responseCode: response, message: "Contractor Added Successfully", joins: false})
+            return res.status(response).json({responseCode: response, message: "Contractor Added Successfully", joins: false, contractor: null})
         }
         const [result] = await Contractor.create(req.body)
         req.body.contractor = result.insertId
         const [detailsResult] = await ContractorDetails.create(req.body)
-        res.status(201).json({responseCode: 201, message: "Contractor Added Successfully", joins: true})
+        res.status(201).json({responseCode: 201, message: "Contractor Added Successfully", joins: true, contractor: result.insertId})
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500
