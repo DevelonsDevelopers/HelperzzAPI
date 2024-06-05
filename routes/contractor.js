@@ -12,6 +12,7 @@ const highlightsController = require('../controllers/contractorHighlights')
 const languagesController = require('../controllers/contractorLanguages')
 const documentsController = require('../controllers/contractorDocuments')
 
+router.post('/join', controller.joinContractor)
 router.post('/create', controller.createContractor)
 router.post('/createDetails', detailsController.createContractorDetails)
 router.put('/updateDetails', detailsController.updateContractorDetails)

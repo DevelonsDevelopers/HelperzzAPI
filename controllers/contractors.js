@@ -16,6 +16,35 @@ const Language = require('../models/language')
 const Category = require('../models/category')
 const mailer = require('../controllers/emailService')
 
+exports.joinContractor = async (req, res, next) => {
+    try {
+        const { email, company_name } = req.body
+        const [emailCheck] = await Contractor.checkEmail(email)
+        const [companyCheck] = await ContractorDetails.checkCompany(company_name)
+        let msg = ''
+        let response = 407
+        if (emailCheck.length > 1) {
+            msg = msg + "Email already exist!"
+            response+=1
+            return res.status(response).json({responseCode: response, message: "Contractor Added Successfully", joins: false})
+        }
+        if (companyCheck.length > 1) {
+            msg = msg + "Company already exist!"
+            response+=1
+            return res.status(response).json({responseCode: response, message: "Contractor Added Successfully", joins: false})
+        }
+        const [result] = await Contractor.create(req.body)
+        req.body.contractor = result.insertId
+        const [detailsResult] = await ContractorDetails.create(req.body)
+        res.status(201).json({responseCode: 201, message: "Contractor Added Successfully", joins: true})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.createContractor = async (req, res, next) => {
     try {
         const [result] = await Contractor.create(req.body)
