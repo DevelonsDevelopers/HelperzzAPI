@@ -55,6 +55,6 @@ module.exports = class Customer {
     }
 
     static requests(id){
-        return database.query('SELECT * FROM service_requests WHERE user = ?', [id])
+        return database.query('SELECT service_requests.*, subcategories.name as subcategory_name FROM service_requests INNER JOIN subcategories ON subcategories.id = service_requests.subcategory WHERE user = ?', [id])
     }
 }
