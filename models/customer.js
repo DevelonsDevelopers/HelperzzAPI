@@ -53,4 +53,8 @@ module.exports = class Customer {
     static reviews(id){
         return database.query('SELECT * FROM contractors_reviews WHERE user = ?', [id])
     }
+
+    static requests(id){
+        return database.query('SELECT * FROM service_requests WHERE user = ?', [id])
+    }
 }
