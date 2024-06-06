@@ -34,6 +34,19 @@ exports.getCustomer = async (req, res, next) => {
     }
 }
 
+exports.getReviews = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [reviews] = await Customer.reviews(id)
+        res.status(200).json({ responseCode: 200, message: "Reviews Fetched Successfully", reviews: reviews })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllCustomers = async (req, res, next) => {
     try {
         const [customers] = await Customer.fetchAll()

@@ -49,4 +49,8 @@ module.exports = class Customer {
     static changeStatus(params){
         return database.query('UPDATE customers SET status = ? WHERE (id = ?)', [params.status, params.id])
     }
+
+    static reviews(id){
+        return database.query('SELECT * FROM contractors_reviews WHERE user = ?', [id])
+    }
 }
