@@ -14,6 +14,10 @@ module.exports = class contractorHighlights {
         return database.query('SELECT highlights.*, IFNULL(contractor_highlights.id, 0) as assigned FROM highlights LEFT JOIN contractor_highlights ON contractor_highlights.highlight = highlights.id AND contractor_highlights.contractor = ?', [contractor])
     }
 
+    static fetchAssigned(contractor) {
+        return database.query('SELECT * FROM (SELECT highlights.*, IFNULL(contractor_highlights.id, 0) as assigned FROM highlights LEFT JOIN contractor_highlights ON contractor_highlights.highlight = highlights.id AND contractor_highlights.contractor = ?) t WHERE assigned != 0', [contractor])
+    }
+
     static delete(id) {
         return database.query('DELETE FROM contractor_highlights WHERE id = ?', [id])
     }
