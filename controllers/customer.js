@@ -38,6 +38,7 @@ exports.getCustomer = async (req, res, next) => {
 
 exports.getProfile = async (req, res, next) => {
     try {
+        console.log(res.locals)
         const id = res.locals.payload.customer
         const [[customer]] = await Customer.fetch(id)
         res.status(200).json({ responseCode: 200, message: "Customer Fetched Successfully", customer: customer })
