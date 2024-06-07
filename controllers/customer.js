@@ -36,9 +36,22 @@ exports.getCustomer = async (req, res, next) => {
     }
 }
 
+exports.getProfile = async (req, res, next) => {
+    try {
+        const id = res.locals.payload.customer
+        const [[customer]] = await Customer.fetch(id)
+        res.status(200).json({ responseCode: 200, message: "Customer Fetched Successfully", customer: customer })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getReviews = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const id = res.locals.payload.customer
         const [reviews] = await Customer.reviews(id)
         res.status(200).json({ responseCode: 200, message: "Reviews Fetched Successfully", reviews: reviews })
     } catch (error) {
@@ -51,7 +64,7 @@ exports.getReviews = async (req, res, next) => {
 
 exports.getRequests = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const id = res.locals.payload.customer
         const [requests] = await Customer.requests(id)
         for (const request of requests) {
             const [contractors] = await RequestContractors.fetchRequests(request.id)

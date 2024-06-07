@@ -34,7 +34,7 @@ exports.Login = async (req, res, next) => {
             let authenticate = await Auth.comparePassword(user.password, password)
             if (authenticate) {
                 let payload = {
-                    id: user.id
+                    customer: user.id
                 };
                 let token = Auth.createToken(payload)
                 return res.status(200).json({ responseCode: 200, message: "Login Success", token: token, user: user })
