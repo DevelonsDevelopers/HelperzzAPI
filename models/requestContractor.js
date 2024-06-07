@@ -15,7 +15,7 @@ module.exports = class RequestContractor {
     }
 
     static fetchRequests(request){
-        return database.query('SELECT contractors.* FROM request_contractors INNER JOIN contractors ON contractors.id = request_contractors.contractor WHERE request = ?', [request])
+        return database.query('SELECT contractor_details.* FROM request_contractors INNER JOIN contractors ON contractors.id = request_contractors.contractor INNER JOIN contractor_details ON contractor_details.contractor = contractors.id WHERE request = ?', [request])
     }
 
     static delete (id){

@@ -55,7 +55,7 @@ exports.getRequests = async (req, res, next) => {
         const [requests] = await Customer.requests(id)
         for (const request of requests) {
             const [contractors] = await RequestContractors.fetchRequests(request.id)
-            requests.contractors = contractors
+            request.contractors = contractors
         }
         res.status(200).json({ responseCode: 200, message: "Requests Fetched Successfully", requests: requests })
     } catch (error) {
