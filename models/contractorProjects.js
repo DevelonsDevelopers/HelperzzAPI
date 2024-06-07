@@ -22,6 +22,10 @@ module.exports = class contractorProjects {
         return database.query('SELECT * FROM contractors_projects WHERE contractor = ?', [contractor])
     }
 
+    static fetchProjectsSubcategories(contractor) {
+        return database.query('SELECT distinct(subcategory), subcategories.* FROM contractors_projects INNER JOIN subcategories ON subcategories.id = subcategory WHERE contractor = ?', [contractor])
+}
+
     static delete(id) {
         return database.query('DELETE FROM contractors_projects WHERE id = ?', [id])
     }

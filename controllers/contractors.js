@@ -142,6 +142,7 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
             const [images] = await ContractorProjects.fetchImagesByProject(project.id)
             project.images = images
         }
+        const [subcategories] = await ContractorProjects.fetchProjectsSubcategories(contractor.id)
         res.status(200).json({
             responseCode: 200,
             message: "Contractor fetched Successfully",
@@ -154,7 +155,8 @@ exports.getContractorDetailsByTag = async (req, res, next) => {
                 badges: badges,
                 reviews: reviews,
                 ratings: ratings,
-                projects: projects
+                projects: projects,
+                subcategories: subcategories
             }
         })
     } catch (error) {
