@@ -215,6 +215,19 @@ exports.getContractorsByCategory = async (req, res, next) => {
     }
 }
 
+exports.getContractorsBySubcategory = async (req, res, next) => {
+    try {
+        const {subcategory} = req.params
+        const [contractors] = await Contractor.fetchBySubcategory(subcategory, req.body)
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getFilters = async (req, res, next) => {
     try {
 

@@ -26,6 +26,19 @@ exports.getSubcategory = async (req, res, next) => {
     }
 }
 
+exports.getSubcategoryByTag = async (req, res, next) => {
+    try {
+        const { tag } = req.params
+        const [[subcategory]] = await Subcategory.fetchByTag(tag)
+        res.status(201).json({ responseCode: 201, message: "Subcategory Fetched Successfully", subcategory: subcategory })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllSubcategories = async (req, res, next) => {
     try {
         const [subcategories] = await Subcategory.fetchAll()

@@ -10,6 +10,11 @@ module.exports = class Subcategory {
         return database.query('SELECT subcategories.*, categories.name as category_name FROM subcategories INNER JOIN categories ON categories.id = subcategories.category WHERE subcategories.id = ?', [id])
     }
 
+    static fetchByTag(tag){
+        let name = tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM subcategories WHERE UPPER(name) = ?', [name])
+    }
+
     static fetchAll () {
         return database.query('SELECT subcategories.*, categories.name as category_name FROM subcategories INNER JOIN categories ON categories.id = subcategories.category ORDER BY subcategories.id DESC')
     }
