@@ -2,6 +2,7 @@ const Customer = require('../models/customer')
 const Email = require('../controllers/emailService')
 const RequestContractors = require('../models/requestContractor')
 const ContractorProjects = require("../models/contractorProjects");
+const ContractorReviews = require("../models/contractorReviews");
 
 exports.createPasswordLessCustomer = async (req, res, next) => {
     try {
@@ -70,6 +71,12 @@ exports.getRequests = async (req, res, next) => {
         for (const request of requests) {
             const [contractors] = await RequestContractors.fetchRequests(request.id)
             request.contractors = contractors
+            for (const contractor of contractors) {
+                const [reviews] = await ContractorReviews.fetchApprovedByContractor(contractor.id)
+                const [[ratings]] = await ContractorReviews.fetchRatings(contractor.id)
+                contractor.ratings = ratings
+                contractor.reviews = reviews
+            }
         }
         res.status(200).json({ responseCode: 200, message: "Requests Fetched Successfully", requests: requests })
     } catch (error) {
