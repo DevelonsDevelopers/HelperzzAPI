@@ -206,6 +206,10 @@ exports.getContractorsByCategory = async (req, res, next) => {
     try {
         const {category} = req.params
         const [contractors] = await Contractor.fetchByCategory(category, req.body)
+        for (const contractor of contractors) {
+            const [highlights] = await ContractorHighlights.fetchByContractor(contractor.id)
+            contractor.highlights = highlights;
+        }
         res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
         if (!error.statusCode) {
@@ -219,6 +223,10 @@ exports.getContractorsBySubcategory = async (req, res, next) => {
     try {
         const {subcategory} = req.params
         const [contractors] = await Contractor.fetchBySubcategory(subcategory, req.body)
+        for (const contractor of contractors) {
+            const [highlights] = await ContractorHighlights.fetchByContractor(contractor.id)
+            contractor.highlights = highlights;
+        }
         res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
     } catch (error) {
         if (!error.statusCode) {
