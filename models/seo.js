@@ -29,6 +29,11 @@ module.exports = class Category {
         return database.query('SELECT * FROM subcategories WHERE UPPER(name) = ?', [name])
     }
 
+    static fetchCostGuidePage (tag) {
+        let name = tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM cost_guides WHERE UPPER(title) = ?', [name])
+    }
+
     static fetchByRoute(route) {
         return database.query('SELECT * FROM seo WHERE route = ?', [route])
     }
