@@ -26,6 +26,19 @@ exports.getSEO = async (req, res, next) => {
     }
 }
 
+exports.getContractorPageSEO = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const [[seo]] = await SEO.fetchContractorPage(id)
+        res.status(201).json({ responseCode: 201, message: "SEO Fetched Successfully", seo: seo })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getSEObyRoute = async (req, res, next) => {
     try {
         const { route } = req.params

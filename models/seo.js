@@ -10,6 +10,10 @@ module.exports = class Category {
         return database.query('SELECT * FROM seo WHERE id = ?', [id])
     }
 
+    static fetchContractorPage(id){
+        return database.query('SELECT * FROM contractor_seo WHERE contractor = ?', [id])
+    }
+
     static fetchByRoute(route) {
         return database.query('SELECT * FROM seo WHERE route = ?', [route])
     }
