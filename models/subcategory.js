@@ -3,7 +3,7 @@ const database = require('../util/database')
 module.exports = class Subcategory {
 
     static create (params) {
-        return database.query('INSERT INTO subcategories (category, name) VALUES (?, ?)' , [params.category, params.name])
+        return database.query('INSERT INTO subcategories (category, name, meta_title, meta_description) VALUES (?, ?, ?, ?)' , [params.category, params.name, params.meta_title, params.meta_description])
     }
 
     static fetch (id) {
@@ -28,7 +28,7 @@ module.exports = class Subcategory {
     }
 
     static update (params) {
-        return database.query('UPDATE subcategories SET category = ?, name = ? WHERE (id = ?)', [params.category, params.name, params.id])
+        return database.query('UPDATE subcategories SET category = ?, name = ?, meta_title = ?, meta_description = ? WHERE (id = ?)', [params.category, params.name, params.meta_title, params.meta_description, params.id])
     }
 
     static delete (id) {
