@@ -15,6 +15,10 @@ module.exports = class Category {
         return database.query('SELECT * FROM contractor_seo INNER JOIN contractor_details ON contractor_details.contractor = contractor_seo.contractor WHERE UPPER(contractor_details.company_name) = ?', [name])
     }
 
+    static fetchCategoryPage(tag){
+        return database.query('SELECT * FROM categories WHERE tag = ?', [tag])
+    }
+
     static fetchByRoute(route) {
         return database.query('SELECT * FROM seo WHERE route = ?', [route])
     }

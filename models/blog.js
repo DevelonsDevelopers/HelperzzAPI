@@ -40,7 +40,7 @@ module.exports = class Blog {
     }
 
     static update(params) {
-        return database.query('UPDATE blogs SET title = ?, category = ?, author = ?, subtitle = ?, content = ?, image = ?, seo_title = ?, seo_description = ? WHERE (id = ?)', [params.title, params.category, params.author, params.subtitle, params.content, params.image, params.id, params.seo_title, params.seo_description])
+        return database.query('UPDATE blogs SET title = ?, category = ?, author = ?, subtitle = ?, content = ?, image = ?, seo_title = ?, seo_description = ? WHERE (id = ?)', [params.title, params.category, params.author, params.subtitle, params.content, params.image,  params.seo_title, params.seo_description, params.id,])
     }
 
     static delete(id) {
