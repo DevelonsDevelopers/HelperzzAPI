@@ -34,6 +34,10 @@ module.exports = class Category {
         return database.query('SELECT * FROM cost_guides WHERE UPPER(title) = ?', [name])
     }
 
+    static fetchCityCategory () {
+        return database.query('SELECT t.*, IFNULL(id, 0) as SEO FROM (SELECT cities.id as city_id, cities.name as city_name, categories.id as category_id, categories.name as category_name FROM cities CROSS JOIN categories ORDER BY cities.name) t LEFT JOIN city_category_seo ON city_category_seo.city = city_id AND city_category_seo.category = category_id')
+    }
+
     static fetchByRoute(route) {
         return database.query('SELECT * FROM seo WHERE route = ?', [route])
     }

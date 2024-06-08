@@ -104,6 +104,18 @@ exports.getSEObyRoute = async (req, res, next) => {
     }
 }
 
+exports.getCityCategory = async (req, res, next) => {
+    try {
+        const [cityCategory] = await SEO.fetchCityCategory()
+        res.status(200).json({ responseCode: 200, message: "All Cities and Categories fetched successfully", cityCategory: cityCategory })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getAllSEO = async (req, res, next) => {
     try {
         const [allSEO] = await SEO.fetchAll()

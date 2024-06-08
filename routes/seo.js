@@ -10,6 +10,7 @@ router.get('/subcategory/:tag', controller.getSubcategoryPageSEO)
 router.get('/costguide/:tag', controller.getCostGuidePageSEO)
 router.get('/get/:route', controller.getSEObyRoute)
 router.get('/all', controller.getAllSEO);
+router.get('/cityCategory', controller.getCityCategory);
 router.put('/update', controller.updateSEO)
 router.delete('/delete/:id', controller.deleteSEO);
 
