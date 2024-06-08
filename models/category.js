@@ -3,7 +3,7 @@ const database = require("../util/database")
 module.exports = class Category {
 
     static create(params) {
-        return database.query('INSERT INTO categories (name, details, image, tag) VALUES (?, ?, ?, ?)', [params.name, params.details, params.image, params.tag])
+        return database.query('INSERT INTO categories (name, details, image, tag, meta_title, meta_description, page_description) VALUES (?, ?, ?, ?, ?, ?, ?)', [params.name, params.details, params.image, params.tag, params.meta_title, params.meta_description, params.page_description])
     }
 
     static fetch(id) {
@@ -43,7 +43,7 @@ module.exports = class Category {
     }
 
     static update(params) {
-        return database.query('UPDATE categories SET name = ?, details = ?, image = ? WHERE (id = ?)', [params.name, params.details, params.image, params.id])
+        return database.query('UPDATE categories SET name = ?, details = ?, image = ?, meta_title = ?, meta_description = ?, page_description = ? WHERE (id = ?)', [params.name, params.details, params.image, params.meta_title, params.meta_description, params.page_description, params.id])
     }
 
     static changeStatus(params) {
