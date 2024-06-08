@@ -28,7 +28,7 @@ module.exports = class costGuides {
     }
 
     static update (params) {
-        return database.query('UPDATE cost_guides SET title = ?, subtitle = ?, content = ?, image = ?, seo_title = ?, seo_description = ? WHERE (id = ?)', [params.title, params.subtitle, params.content, params.image, params.id, params.seo_title, params.seo_description])
+        return database.query('UPDATE cost_guides SET title = ?, subtitle = ?, content = ?, image = ?, seo_title = ?, seo_description = ? WHERE (id = ?)', [params.title, params.subtitle, params.content, params.image, params.seo_title, params.seo_description, params.id])
     }
 
     static delete(id){
