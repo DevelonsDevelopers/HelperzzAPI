@@ -19,6 +19,11 @@ module.exports = class Category {
         return database.query('SELECT * FROM categories WHERE tag = ?', [tag])
     }
 
+    static fetchBlogPage (tag) {
+        let name = tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM blogs WHERE UPPER(title) = ?', [name])
+    }
+
     static fetchByRoute(route) {
         return database.query('SELECT * FROM seo WHERE route = ?', [route])
     }
