@@ -3,7 +3,7 @@ const database = require("../util/database")
 module.exports = class Category {
 
     static create (params){
-        return database.query('INSERT INTO seo (page_name, route, title, meta_content, meta_description) VALUES (?, ?, ?, ?, ?)', [params.page_name, params.route, params.title, params.meta_content, params.meta_description])
+        return database.query('INSERT INTO seo (page_name, route, title, meta_content, meta_description, page_name) VALUES (?, ?, ?, ?, ?, ?)', [params.page_name, params.route, params.title, params.meta_content, params.meta_description, params.page_name])
     }
 
     static fetch(id) {
@@ -19,7 +19,7 @@ module.exports = class Category {
     }
 
     static update (params){
-        return database.query('UPDATE seo SET page_name = ?, route = ?, title = ?, meta_content = ?, meta_description = ? WHERE (id = ?)', [params.page_name, params.route, params.title, params.meta_content, params.meta_description, params.id])
+        return database.query('UPDATE seo SET page_name = ?, route = ?, title = ?, meta_content = ?, meta_description = ?, page_name = ? WHERE (id = ?)', [params.page_name, params.route, params.title, params.meta_content, params.meta_description, params.page_name, params.id])
     }
 
     static delete (id){
