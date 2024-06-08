@@ -10,8 +10,9 @@ module.exports = class Category {
         return database.query('SELECT * FROM seo WHERE id = ?', [id])
     }
 
-    static fetchContractorPage(id){
-        return database.query('SELECT * FROM contractor_seo WHERE contractor = ?', [id])
+    static fetchContractorPage(tag){
+        let name = tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM contractor_seo INNER JOIN contractor_details ON contractor_details.contractor = contractor_seo.contractor WHERE UPPER(contractor_details.company_name) = ?', [name])
     }
 
     static fetchByRoute(route) {

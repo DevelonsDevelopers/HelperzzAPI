@@ -3,7 +3,7 @@ const controller = require('../controllers/seo')
 
 router.post('/create', controller.createSEO)
 router.get('/single/:id', controller.getSEO)
-router.get('/contractor/:id', controller.getContractorPageSEO)
+router.get('/contractor/:tag', controller.getContractorPageSEO)
 router.get('/get/:route', controller.getSEObyRoute)
 router.get('/all', controller.getAllSEO);
 router.put('/update', controller.updateSEO)
