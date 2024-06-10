@@ -28,7 +28,7 @@ module.exports = class Subcategory {
     }
 
     static update (params) {
-        return database.query('UPDATE subcategories SET category = ?, name = ?, meta_title = ?, meta_description = ?, page_description = ? WHERE (id = ?)', [params.category, params.name, params.meta_title, params.meta_description, params.id, params.page_description])
+        return database.query('UPDATE subcategories SET category = ?, name = ?, meta_title = ?, meta_description = ?, page_description = ? WHERE (id = ?)', [params.category, params.name, params.meta_title, params.meta_description, params.page_description, params.id])
     }
 
     static delete (id) {
