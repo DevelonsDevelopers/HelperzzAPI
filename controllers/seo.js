@@ -13,6 +13,19 @@ exports.createSEO = async (req, res, next) => {
     }
 }
 
+exports.createCityCategorySEO = async (req, res, next) => {
+    try {
+        const [result] = await SEO.createCityCategory(req.body)
+        const [[seo]] = await SEO.fetch(result.insertId)
+        res.status(201).json({ responseCode: 201, message: "SEO Added Successfully", seo: seo })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getSEO = async (req, res, next) => {
     try {
         const { id } = req.params
@@ -131,6 +144,24 @@ exports.getAllSEO = async (req, res, next) => {
 exports.updateSEO = async (req, res, next) => {
     try {
         const [result] = await SEO.update(req.body)
+        let success = false
+        let message = "Failed to Update"
+        if (result.changedRows === 1){
+            success = true
+            message = "SEO Updated Successfully"
+        }
+        res.status(202).json({ responseCode: 202, message: message, success: success })
+    } catch (error) {
+        if (!error.statusCode){
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.updateCityCategorySEO = async (req, res, next) => {
+    try {
+        const [result] = await SEO.updateCityCategory(req.body)
         let success = false
         let message = "Failed to Update"
         if (result.changedRows === 1){

@@ -6,6 +6,10 @@ module.exports = class Category {
         return database.query('INSERT INTO seo (page_name, route, title, meta_content, meta_description) VALUES (?, ?, ?, ?, ?)', [params.page_name, params.route, params.title, params.meta_content, params.meta_description])
     }
 
+    static createCityCategory (params){
+        return database.query('INSERT INTO city_category_seo (city, category, meta_title, meta_description, page_description) VALUES (?, ?, ?, ?, ?)', [params.city, params.category, params.meta_title, params.meta_description, params.page_description])
+    }
+
     static fetch(id) {
         return database.query('SELECT * FROM seo WHERE id = ?', [id])
     }
@@ -48,6 +52,10 @@ module.exports = class Category {
 
     static update (params){
         return database.query('UPDATE seo SET page_name = ?, route = ?, title = ?, meta_content = ?, meta_description = ? WHERE (id = ?)', [params.page_name, params.route, params.title, params.meta_content, params.meta_description, params.id])
+    }
+
+    static updateCityCategory (params) {
+        return database.query('UPDATE city_category_seo SET city = ?, category = ?, meta_title = ?, meta_description = ?, page_description = ? WHERE (id = ?)', [params.city, params.category, params.meta_title, params.meta_description, params.page_description, params.id])
     }
 
     static delete (id){
