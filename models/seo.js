@@ -14,7 +14,7 @@ module.exports = class Category {
         return database.query('SELECT * FROM seo WHERE id = ?', [id])
     }
 
-    static fetchCityCategory(id){
+    static fetchCityCategorySEO(id){
         return database.query('SELECT * FROM city_category_seo WHERE id = ?', [id])
     }
 
