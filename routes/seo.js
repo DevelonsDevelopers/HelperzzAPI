@@ -3,6 +3,7 @@ const controller = require('../controllers/seo')
 
 router.post('/create', controller.createSEO)
 router.get('/single/:id', controller.getSEO)
+router.get('/singleCityCategory/:id', controller.getSEO)
 router.get('/contractor/:tag', controller.getContractorPageSEO)
 router.get('/category/:tag', controller.getCategoryPageSEO)
 router.get('/blog/:tag', controller.getBlogPageSEO)
