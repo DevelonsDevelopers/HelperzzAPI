@@ -20,8 +20,7 @@ module.exports = class Category {
 
     static fetchCityCategorySEOByTag(city_tag, category_tag){
         let city_name = city_tag.replaceAll("-", " ").toUpperCase()
-        let category_name = category_tag.replaceAll("-", " ").toUpperCase()
-        return database.query('SELECT * FROM (SELECT cities.id as city_id, cities.name as city_name, categories.id as category_id, categories.name as category_name FROM cities CROSS JOIN categories ORDER BY cities.name) t LEFT JOIN city_category_seo ON city_category_seo.city = city_id AND city_category_seo.category = category_id WHERE UPPER(city_name) = ? AND UPPER(category_name) = ?', [city_name, category_name])
+        return database.query('SELECT * FROM (SELECT cities.id as city_id, cities.name as city_name, categories.id as category_id, categories.name as category_name, categories.tag FROM cities CROSS JOIN categories ORDER BY cities.name) t LEFT JOIN city_category_seo ON city_category_seo.city = city_id AND city_category_seo.category = category_id WHERE UPPER(city_name) = ? AND UPPER(tag) = ?', [city_name, category_tag])
     }
 
     static fetchContractorPage(tag){
