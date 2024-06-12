@@ -54,9 +54,10 @@ exports.getCityCategorySEO = async (req, res, next) => {
 
 exports.getCityCategorySEOByTag = async (req, res, next) => {
     try {
-        const { city, category } = req.body
+        const city = req.body.city;
+        const category = req.body.category
         const [[seo]] = await SEO.fetchCityCategorySEOByTag(city, category)
-        res.status(201).json({ responseCode: 201, message: "SEO Fetched Successfully", seo: seo })
+        res.status(200).json({ responseCode: 200, message: "SEO Fetched Successfully", seo: seo })
     } catch (error) {
         if (!error.statusCode){
             error.statusCode = 500
