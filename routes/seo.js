@@ -13,6 +13,7 @@ router.get('/get/:route', controller.getSEObyRoute)
 router.get('/all', controller.getAllSEO);
 router.get('/cityCategory', controller.getCityCategory);
 router.post('/createCityCategory', controller.createCityCategorySEO);
+router.post('/cityCategoryByTag', controller.getCityCategorySEOByTag);
 router.put('/updateCityCategory', controller.updateCityCategorySEO)
 router.put('/update', controller.updateSEO)
 router.delete('/delete/:id', controller.deleteSEO);

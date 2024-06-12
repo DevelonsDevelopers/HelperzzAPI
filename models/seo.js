@@ -18,6 +18,12 @@ module.exports = class Category {
         return database.query('SELECT * FROM city_category_seo WHERE id = ?', [id])
     }
 
+    static fetchCityCategorySEOByTag(city_tag, category_tag){
+        let city_name = city_tag.replaceAll("-", " ").toUpperCase()
+        let category_name = category_tag.replaceAll("-", " ").toUpperCase()
+        return database.query('SELECT * FROM (SELECT cities.id as city_id, cities.name as city_name, categories.id as category_id, categories.name as category_name FROM cities CROSS JOIN categories ORDER BY cities.name) t LEFT JOIN city_category_seo ON city_category_seo.city = city_id AND city_category_seo.category = category_id WHERE UPPER(city_name) = ? AND UPPER(category_name) = ?', [city_name, category_name])
+    }
+
     static fetchContractorPage(tag){
         let name = tag.replaceAll("-", " ").toUpperCase()
         return database.query('SELECT * FROM contractor_seo INNER JOIN contractor_details ON contractor_details.contractor = contractor_seo.contractor WHERE UPPER(contractor_details.company_name) = ?', [name])
