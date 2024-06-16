@@ -45,7 +45,7 @@ module.exports = class contractorReviews {
     }
 
     static fetchByCategory(category) {
-        return database.query('SELECT contractors_reviews.*, customers.name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user WHERE contractors_reviews.category = ?', [category])
+        return database.query('SELECT contractors_reviews.*, customers.name, contractor_details.company_name FROM contractors_reviews INNER JOIN customers ON customers.id = contractors_reviews.user INNER JOIN contractors ON contractors.id = contractors_reviews.contractor INNER JOIN contractor_details ON contractor_details.contractor = contractors_reviews.contractor WHERE contractors_reviews.category = ? and contractors_reviews.status = 1 ORDER BY contractors_reviews.id DESC LIMIT 4', [category])
     }
 
     static fetchImagesByReview (id) {
