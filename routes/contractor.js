@@ -48,6 +48,7 @@ router.get('/single/:id', controller.getContractor);
 router.get('/allActive', controller.getAllActiveContractors);
 router.get('/allAssigned/:request', controller.getAllAssignedContractors);
 router.post('/category/:category', controller.getContractorsByCategory);
+router.post('/cityCategory/:category', controller.getContractorsByCityCategory);
 router.post('/subcategory/:subcategory', controller.getContractorsBySubcategory);
 router.get('/featured', controller.getFeaturedContractors);
 router.put('/update', controller.updateContractor)

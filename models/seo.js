@@ -48,7 +48,7 @@ module.exports = class Category {
     }
 
     static fetchCityCategory () {
-        return database.query('SELECT t.*, IFNULL(id, 0) as SEO FROM (SELECT cities.id as city_id, cities.name as city_name, categories.id as category_id, categories.name as category_name FROM cities CROSS JOIN categories ORDER BY cities.name) t LEFT JOIN city_category_seo ON city_category_seo.city = city_id AND city_category_seo.category = category_id')
+        return database.query('SELECT t.*, IFNULL(id, 0) as SEO FROM (SELECT cities.id as city_id, cities.name as city_name, categories.id as category_id, categories.name as category_name FROM cities CROSS JOIN categories ORDER BY categories.name) t LEFT JOIN city_category_seo ON city_category_seo.city = city_id AND city_category_seo.category = category_id ORDER BY category_name ASC')
     }
 
     static fetchByRoute(route) {

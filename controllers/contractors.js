@@ -221,6 +221,23 @@ exports.getContractorsByCategory = async (req, res, next) => {
     }
 }
 
+exports.getContractorsByCityCategory = async (req, res, next) => {
+    try {
+        const {category} = req.params
+        const [contractors] = await Contractor.fetchByCityCategory(category, req.body.city, req.body)
+        for (const contractor of contractors) {
+            const [highlights] = await ContractorHighlights.fetchAssigned(contractor.id)
+            contractor.highlights = highlights;
+        }
+        res.status(200).json({responseCode: 200, message: "Contractors fetched successfully", contractors: contractors})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getContractorsBySubcategory = async (req, res, next) => {
     try {
         const {subcategory} = req.params
