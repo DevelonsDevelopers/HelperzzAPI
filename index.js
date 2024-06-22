@@ -99,7 +99,7 @@ database.getConnection().then(connection => {
     app.use('/api/successStory', successStories)
     app.use('/api/contractorRequests', contractorRequests)
     app.use('/api/contact', contact)
-    app.use('/api/seo', o)
+    app.use('/api/seo', seo)
     app.use('/api/mailer', emailService)
 
     app.use(errorController.get404)
