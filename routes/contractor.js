@@ -41,6 +41,7 @@ router.delete('/deleteDocument/:id', documentsController.deleteDocument)
 router.delete('/unAssignArea/:id', areasController.deleteArea)
 router.delete('/unAssignHighlight/:id', highlightsController.deleteHighlight)
 router.delete('/unAssignLanguage/:id', languagesController.deleteLanguage)
+router.get('/tag/:tag', controller.getContractorByTag)
 router.get('/details/:id', controller.getContractorDetails)
 router.get('/detailsTag/:tag', controller.getContractorDetailsByTag)
 router.get('/all', controller.getAllContractors);

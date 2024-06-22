@@ -204,6 +204,19 @@ exports.getAllAssignedContractors = async (req, res, next) => {
     }
 }
 
+exports.getContractorByTag = async (req, res, next) => {
+    try {
+        const {tag} = req.params
+        const [[contractor]] = await Contractor.fetchByTag(tag)
+        res.status(200).json({responseCode: 200, message: "Contractor fetched successfully", contractor: contractor})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getContractorsByCategory = async (req, res, next) => {
     try {
         const {category} = req.params
