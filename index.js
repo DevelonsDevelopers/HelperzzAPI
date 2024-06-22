@@ -109,5 +109,6 @@ database.getConnection().then(connection => {
         console.log("Connection Successful! Server is running!")
     })
 }).catch(error => {
+    console.log(error)
     console.log("Unable to connect with MySQL! Error in MySQL configuration")
 })
