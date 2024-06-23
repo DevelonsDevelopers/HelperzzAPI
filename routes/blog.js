@@ -8,6 +8,7 @@ router.get('/allActive', controller.getAllActiveBlogs);
 router.get('/single/:id', controller.getBlog);
 router.get('/tag/:tag', controller.getBlogByTag);
 router.get('/featured', controller.getFeaturedBlogs);
+router.get('/related/:category', controller.getRelatedBlogs);
 router.put('/update', controller.updateBlog)
 router.delete('/delete/:id', controller.deleteBlog);
 router.put('/status', controller.updateBlogStatus)
