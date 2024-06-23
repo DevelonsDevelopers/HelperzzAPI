@@ -27,6 +27,10 @@ module.exports = class Blog {
         return database.query('SELECT * FROM blogs WHERE featured = 1 AND status = 1')
     }
 
+    static related(category) {
+        return database.query('SELECT * FROM blogs WHERE category = ? ORDER BY id DESC LIMIT 5', [category])
+    }
+
     static designs() {
         return database.query('SELECT * FROM blogs WHERE category = "Design" AND status = 1')
     }

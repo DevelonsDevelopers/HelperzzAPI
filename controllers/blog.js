@@ -75,6 +75,19 @@ exports.getFeaturedBlogs = async (req, res, next) => {
     }
 }
 
+exports.getRelatedBlogs = async (req, res, next) => {
+    try {
+        const { category } = req.params;
+        const [blogs] = await Blog.related(category)
+        res.status(200).json({responseCode: 200, message: "Blogs fetched successfully", blogs: blogs})
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
 exports.getBlogs = async (req, res, next) => {
     try {
         const [featured] = await Blog.featured()
