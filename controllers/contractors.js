@@ -15,6 +15,7 @@ const Highlight = require('../models/highlight')
 const Language = require('../models/language')
 const Category = require('../models/category')
 const mailer = require('../controllers/emailService')
+const {contractorRegistration} = require("./emailService");
 
 exports.joinContractor = async (req, res, next) => {
     try {
@@ -36,6 +37,7 @@ exports.joinContractor = async (req, res, next) => {
         const [result] = await Contractor.create(req.body)
         req.body.contractor = result.insertId
         const [detailsResult] = await ContractorDetails.create(req.body)
+        await contractorRegistration(email, company_name)
         res.status(201).json({responseCode: 201, message: "Contractor Added Successfully", joins: true, contractor: result.insertId})
     } catch (error) {
         if (!error.statusCode) {

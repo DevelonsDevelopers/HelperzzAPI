@@ -105,16 +105,16 @@ exports.customerSetPassword = async (email) => {
     })
     }
     transporter.sendMail(message, function (err, info) {
-        if (err) {
-            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
-        } else {
-            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
-        }
+        // if (err) {
+        //     res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        // } else {
+        //     res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        // }
     })
 
 }
 
-exports.contractorRegistration = async (req, res, next) => {
+exports.contractorRegistration = async (email, name) => {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -125,17 +125,19 @@ exports.contractorRegistration = async (req, res, next) => {
     })
     message = {
         from: "admin@helperzz.com",
-        to: req.body.email,
+        to: email,
         subject: "We will be in touch shortly",
         text:`` ,
-        html: contractorJoin({ name: req.body.name})
+        html: contractorJoin({ name: name})
     }
     transporter.sendMail(message, function (err, info) {
-        // if (err) {
-        //     res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
-        // } else {
-        //     res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
-        // }
+        console.log(info)
+        console.log(err)
+        if (err) {
+            res.status(200).json({"responseCode": 205, "message": "Email Failed!" + err});
+        } else {
+            res.status(200).json({"responseCode": 200, "message": "Email Sent!"});
+        }
     })
 }
 
